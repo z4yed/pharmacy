@@ -308,7 +308,6 @@ class AddMedicine(View):
 
         manufacturer_price = data.get('manufacturer_price')
         tax0 = data.get('tax0', '')
-        tax = data.get('tax1', '')
 
         status = data.get('status')
 
@@ -322,7 +321,7 @@ class AddMedicine(View):
         obj = Medicine(medicine_name=medicine_name, box_size=leaf_obj, unit=unit_obj, category=category_obj,
                        price=price, manufacturer=manufacturer, manufacturer_price=manufacturer_price,
                        code_text=code, strength=strength, generic_name=generic_name, shelf=product_location,
-                       details=product_details, vat=tax0, igta=tax)
+                       details=product_details, vat=tax0)
 
         if image:
             obj.image = image
@@ -403,7 +402,6 @@ class UpdateMedicine(View):
 
         manufacturer_price = data.get('manufacturer_price')
         tax = data.get('tax0', '')
-        igta = data.get('tax1', '')
 
         status = data.get('status')
 
@@ -429,7 +427,6 @@ class UpdateMedicine(View):
         obj.shelf = product_location
         obj.details = product_details
         obj.vat = tax
-        obj.igta = igta
 
         if image:
             obj.image = image

@@ -94,6 +94,13 @@ function increase_row(module){
                            name="total_price[]" id="total_price_${next_row}" value="0.00"
                            readonly="readonly">
                 </td>
+                
+                <td class="test">
+                    <input type="text" name="line_vat"
+                           id="line_vat_${next_row}"
+                           class="form-control line_vat text-right valid_number"
+                           placeholder="0" value="" min="0" tabindex="11" readonly>
+                </td>
 
                 <td>
                    <button onclick="remove_rows('purchase',  this.id)" type="button" class="btn btn-danger fa fa-trash-alt" tabindex="13" id="${next_row}">

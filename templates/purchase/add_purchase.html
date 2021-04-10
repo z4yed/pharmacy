@@ -178,9 +178,15 @@
                                                     <th class="text-center">
                                                         <nobr>Box MRP <i class="text-danger">*</i></nobr>
                                                     </th>
+
                                                     <th class="text-center">
                                                         <nobr>Total Purchase Price</nobr>
                                                     </th>
+
+                                                    <th class="text-center">
+                                                        <nobr>Vat(%)</nobr>
+                                                    </th>
+
                                                     <th class="text-center">
                                                         <nobr>Action</nobr>
                                                     </th>
@@ -261,6 +267,14 @@
                                                                name="total_price[]" id="total_price_1" value="0.00"
                                                                readonly="readonly">
                                                     </td>
+
+                                                    <td class="test">
+                                                        <input type="text" name="line_vat"
+                                                               id="line_vat_1"
+                                                               class="form-control line_vat text-right valid_number"
+                                                               placeholder="0" value="" min="0" tabindex="11" readonly>
+                                                    </td>
+
                                                     <td>
                                                         <button onclick="remove_rows('purchase', this.id)" type="button" class="btn btn-danger fa fa-trash-alt" tabindex="13" id="1">
                                                             </button>
@@ -275,8 +289,9 @@
                                                                class="text-right form-control" name="sub_total"
                                                                placeholder="0.00" readonly="">
                                                     </td>
+                                                    <td></td>
                                                     <td>
-                                                        <button id="add_invoice_item" type="button"
+                                                        <button id="add_invoice_item" type="button" colspan="3"
                                                                 class="btn btn-info" name="add-invoice-item"
                                                                 onclick="increase_row('purchase')"
                                                                 tabindex="14"><i class="fa fa-plus"></i></button>
@@ -287,7 +302,7 @@
                                                     <td class="text-right">
                                                         <input type="text" id="vat"
                                                                onkeyup="calculate_grand_total()"
-                                                               class="text-right form-control" name="vat"
+                                                               class="text-right form-control" name="vat" readonly
                                                                placeholder="0.00" tabindex="15">
                                                     </td>
                                                     <td>
@@ -485,6 +500,7 @@
                        $("#product_rate_"+row_number).val(data['manufacturer_price'])
                        $("#mrp_"+row_number).val(data['box_price'])
                        $("#available_quantity_"+row_number).val(data['stock'])
+                       $("#line_vat_"+row_number).val(data['vat'])
                    },
                    error: function (error){
                        console.log(error)
@@ -527,6 +543,7 @@
                         $("#total_price_"+row_id).val(parseInt($("#product_rate_"+row_id).val()) * box_quantity)
 
 
+
                         // Calculating Subtotal
                         calculate_subtotal();
 
@@ -551,15 +568,37 @@
 
     <script>
         function calculate_subtotal(){
+
+            let line_totals = []
+            let line_vats = []
+
+            $('.line_vat').each(function(){
+                line_vats.push(this.value)
+            })
+
+
+
             let subtotal = 0
 
             $('.total_price').each(function(){
                  subtotal += parseFloat(this.value);
+                 line_totals.push(this.value);
              });
+
+            // line_totals contains total_price of each line
+            // line_vat contains percentage of vat of each line medicine
+
+            let total_calculated_vat = 0
+
+            for (let i in line_totals){
+                total_calculated_vat += (line_totals[i] * (line_vats[i] / 100) )
+            }
+
 
             /// console.log(subtotal)
 
             $("#sub_total").val(subtotal);
+            $("#vat").val(total_calculated_vat);
 
             calculate_grand_total();
 

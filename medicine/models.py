@@ -58,7 +58,6 @@ class Medicine(models.Model):
     price = models.FloatField()
     image = models.ImageField(upload_to='medicines', null=True, blank=True)
     manufacturer_price = models.FloatField()
-    igta = models.FloatField(default=1.00)
     barcode_path = models.CharField(max_length=200, null=True, blank=True)
 
     is_active = models.BooleanField(default=True)

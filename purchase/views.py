@@ -303,7 +303,8 @@ class FetchPrice(View):
         data = {
             'manufacturer_price': medicine_obj.manufacturer_price,
             'box_price': medicine_obj.price,
-            'stock': medicine_obj.total_stock
+            'stock': medicine_obj.total_stock,
+            'vat': medicine_obj.vat,
         }
 
         return JsonResponse(data, safe=False)
