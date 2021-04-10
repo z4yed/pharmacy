@@ -1,0 +1,653 @@
+{% extends  'base.html' %}
+{% load static %}
+{% block title %}
+    <title>Update Purchase</title>
+{% endblock title %}
+
+
+{% block styles %}
+{% endblock styles %}
+
+{% block content %}
+
+    {% include 'sidebar.html' %}
+
+    <div class="content-wrapper" style="min-height: 201px;">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0 text-dark">Dashboard</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">Dashboard v1</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <span> {% include 'messages.html' %} </span>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <!-- Small boxes (Stat box) -->
+
+                <div class="body-content px-3 py-3">
+
+
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12">
+                            <div class="card">
+                                <div class="card-header py-2">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h6 class="fs-17 font-weight-600 mb-0">Update Purchase</h6>
+                                        </div>
+                                        <div class="text-right">
+                                            <a href="{% url 'purchase:purchase-list' %}"
+                                               class="btn btn-success btn-sm mr-1"><i
+                                                    class="fas fa-align-justify mr-1"></i>Purchase List</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <form action="{% url 'purchase:update-purchase' object.id %}"
+                                          id="update_purchase" enctype="multipart/form-data" method="post"
+                                          accept-charset="utf-8"> {% csrf_token %}
+                                        <div class="form-group row">
+                                            <label for="manufacturer" class="col-md-2 text-right col-form-label">Manufacturer
+                                                <i class="text-danger"> * </i>:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <select name="manufacturer_id"
+                                                            class="form-control"
+                                                            id="manufacturer_id" tabindex="-1">
+                                                        <option value="default" selected="selected"
+                                                                >Select
+                                                            Manufacturer
+                                                        </option>
+                                                        {% for manufacturer in manufacturers %}
+
+                                                            <option value="{{ manufacturer.id }}" {% ifequal object.manufacturer manufacturer  %}
+                                                                    selected
+                                                            {% endifequal %}
+
+                                                            >{{ manufacturer.name }}</option>
+
+                                                        {% endfor %}
+                                                    </select>
+
+                                                </div>
+                                            </div>
+                                            <label for="date" class="col-md-2 text-right col-form-label">Date <i
+                                                    class="text-danger"> * </i>:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <input type="text" name="date" class="form-control datepicker"
+                                                           id="purdate" placeholder="Date" value="{{ object.date | date:"M d, Y" }}" tabindex="2">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="invoice_no" class="col-md-2 text-right col-form-label">Invoice
+                                                No<i class="text-danger"> * </i>:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <input type="text" class="form-control valid_number"
+                                                           name="invoice_no" id="invoice_no" placeholder="Invoice No"
+                                                           value="{{ object.invoice }}" tabindex="3">
+                                                </div>
+                                            </div>
+                                            <label for="details"
+                                                   class="col-md-2 text-right col-form-label">Details:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <input type="text" class="form-control" name="details" id="details"
+                                                           placeholder="Details" value="{{ object.details }}" tabindex="4">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="payment_type" class="col-md-2 text-right col-form-label">Payment
+                                                Type<i class="text-danger"> * </i>:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <select name="payment_type" id="payment_type"
+                                                            onchange=""
+                                                            class="form-control"
+                                                            tabindex="-1" data-select2-id="select2-data-payment_type"
+                                                            aria-hidden="true">
+                                                        {% for payment_type in payment_types %}
+                                                            <option value="{{ payment_type.0 }}" {% ifequal payment_type.0 object.payment_types %}
+                                                            selected {% endifequal %}>
+                                                                {{ payment_type.1 }}
+                                                            </option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <label for="bank" class="col-md-2 text-right col-form-label d-none" id="bank_label"
+                                                   >Bank:</label>
+                                            <div class="col-md-4 d-none" id="bank_div">
+                                                <div class="">
+                                                    <select name="bank_id"
+                                                            class="form-control"
+                                                            id="bank_id"
+                                                            tabindex="-1" aria-hidden="true">
+                                                        <option value="" selected="selected"
+                                                                data-select2-id="select2-data-6-xio6">Select Bank
+                                                        </option>
+                                                        {% for bank in banks %}
+
+                                                            <option value="{{ bank.0 }}" {% ifequal bank.0 object.bank %} selected
+                                                            {% endifequal %}> {{ bank.1 }} </option>
+
+                                                        {% endfor %}
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-hover" id="purchaseTable">
+                                                <thead>
+                                                <tr>
+                                                    <th class="text-center">
+                                                        <nobr>Medicine Information<i class="text-danger">*</i></nobr>
+                                                    </th>
+                                                    <th class="text-center">
+                                                        <nobr>Batch Id<i class="text-danger"></i></nobr>
+                                                    </th>
+                                                    <th class="text-center">
+                                                        <nobr>Expiry Date<i class="text-danger">*</i></nobr>
+                                                    </th>
+                                                    <th class="text-center">
+                                                        <nobr>Stock Qty</nobr>
+                                                    </th>
+                                                    <th class="text-center">
+                                                        <nobr>Box Pattern<i class="text-danger">*</i></nobr>
+                                                    </th>
+                                                    <th class="text-center">
+                                                        <nobr>Box Qty<i class="text-danger">*</i></nobr>
+                                                    </th>
+                                                    <th class="text-center">
+                                                        <nobr>Quantity <i class="text-danger">*</i></nobr>
+                                                    </th>
+                                                    <th class="text-center">
+                                                        <nobr>Manufacturer Price<i class="text-danger">*</i></nobr>
+                                                    </th>
+                                                    <th class="text-center">
+                                                        <nobr>Box MRP <i class="text-danger">*</i></nobr>
+                                                    </th>
+                                                    <th class="text-center">
+                                                        <nobr>Total Purchase Price</nobr>
+                                                    </th>
+                                                    <th class="text-center">
+                                                        <nobr>Action</nobr>
+                                                    </th>
+                                                </tr>
+                                                </thead>
+                                                <tbody id="addPurchaseItem">
+                                                {% for item  in items %}
+                                                    <tr id="row_{{ forloop.counter }}">
+                                                    <input type="hidden" id="batch_{{ forloop.counter }}" name="items[]" value="{{ item.id }}">
+                                                        <td class="span3 manufacturer">
+                                                            <select name="medicine_name[]" class="form-control available_medicine"
+                                                                    id="medicine_id_{{ forloop.counter }}" data-row="1">
+                                                                <option>Select Medicine</option>
+                                                            </select>
+                                                            <input type="hidden" class="selected_medicines" value="{{ item.batch.medicine.id }}">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" name="batch_id[]" id="batch_id_{{ forloop.counter }}"
+                                                                   class="form-control text-right" tabindex="7"
+                                                                   placeholder="Batch Id" value="{{ item.batch.batch_number }}">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" name="expire_date[]" id="expire_date_{{ forloop.counter }}"
+                                                                   class="form-control datepicker" value="{{ item.batch.expiry_date | date:"M d, Y" }}"
+                                                                   tabindex="8" placeholder="Expiry Date"
+                                                                   onclick="validate_date()"
+                                                                   required="">
+                                                        </td>
+                                                        <td class="wt">
+                                                            <input type="text" id="available_quantity_{{ forloop.counter }}" name="available_quantity[]"
+                                                                   class="form-control text-right " value="{{ item.batch.batch_stock }}"
+                                                                   placeholder="0.00" readonly="">
+                                                        </td>
+                                                        <td>
+                                                            <select name="leaf_type[]"
+                                                                    class="form-control"
+                                                                    id="leaf_type_{{ forloop.counter }}"
+                                                                     onchange="calculate_line_total('select', this.id, this.value)"
+                                                                     required
+                                                                    >
+                                                            <option value="default" selected="selected"
+                                                                    data-select2-id="select2-data-8-1uob">Select Leaf Type
+                                                            </option>
+                                                            {% for leaf in leafs %}
+
+                                                                <option value="{{ leaf.id }}" {% ifequal leaf item.batch.box_pattern  %} selected  {% endifequal %}
+                                                                >{{ leaf.leaf_type }} ({{ leaf.number_per_box }})</option>
+
+                                                            {% endfor %}
+                                                        </select>
+
+                                                        </td>
+                                                        <td class="text-right">
+                                                            <input type="text" name="box_quantity[]" id="box_quantity_{{ forloop.counter }}"
+                                                                   class="form-control text-right store_cal_1 valid_number"
+                                                                   onkeyup="calculate_line_total('input', this.id, this.value)"
+                                                                   onchange=""
+                                                                   placeholder="0.00" value="{{ item.batch.box_quantity }}" min="0" tabindex="10"
+                                                                   required="required">
+                                                        </td>
+                                                        <td class="text-right">
+                                                            <input type="text" name="product_quantity[]" id="quantity_{{ forloop.counter }}"
+                                                                   class="form-control text-right store_cal_1"
+                                                                   placeholder="0.00" value="{{ item.batch.total_quantity }}" min="0"
+                                                                   readonly="">
+                                                        </td>
+                                                        <td class="test">
+                                                            <input type="text" name="product_rate[]"
+                                                                   onkeyup=""
+                                                                   onchange=""
+                                                                   id="product_rate_{{ forloop.counter }}"
+                                                                   class="form-control product_rate text-right valid_number"
+                                                                   placeholder="0.00" value="{{ item.batch.medicine.manufacturer_price | floatformat:2 }}" min="0" tabindex="11"
+                                                                   required="required">
+                                                        </td>
+                                                        <td><input type="text" class="form-control valid_number mrp" value="{{ item.batch.medicine.price | floatformat:2 }}"
+                                                                   name="mrp[]" id="mrp_{{ forloop.counter }}" required="" tabindex="12"></td>
+                                                        <td class="text-right">
+                                                            <input class="form-control total_price text-right" type="text"
+                                                                   name="total_price[]" id="total_price_{{ forloop.counter }}" value="{{ item.calculated_price }}"
+                                                                   readonly="readonly">
+                                                        </td>
+                                                        <td>
+                                                            <button onclick="remove_rows('purchase', this.id)" type="button" class="btn btn-danger fa fa-trash-alt" tabindex="13" id="{{ forloop.counter }}">
+                                                                </button>
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+
+                                                </tbody>
+                                                <tfoot>
+                                                <tr>
+                                                    <td class="text-right" colspan="9"><b>Sub Total:</b></td>
+                                                    <td class="text-right">
+                                                        <input type="text" id="sub_total"
+                                                               class="text-right form-control" name="sub_total"
+                                                               placeholder="0.00" readonly="" value="{{ object.subtotal }}">
+                                                    </td>
+                                                    <td>
+                                                        <button id="add_invoice_item" type="button"
+                                                                class="btn btn-info" name="add-invoice-item"
+                                                                onclick="increase_row('purchase')"
+                                                                tabindex="14"><i class="fa fa-plus"></i></button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-right" colspan="9"><b>Vat:</b></td>
+                                                    <td class="text-right">
+                                                        <input type="text" id="vat" value="{{ object.vat }}"
+                                                               onkeyup="calculate_grand_total()"
+                                                               class="text-right form-control" name="vat"
+                                                               placeholder="0.00" tabindex="15">
+                                                    </td>
+                                                    <td>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-right" colspan="9"><b>Discount:</b></td>
+                                                    <td class="text-right">
+                                                        <input type="text" id="discount" value="{{ object.discount }}"
+                                                               onkeyup="calculate_grand_total()"
+                                                               class="text-right form-control valid_number"
+                                                               name="discount" placeholder="0.00" tabindex="16">
+                                                    </td>
+                                                    <td>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-right" colspan="9"><b>Grand Total:</b></td>
+                                                    <td class="text-right">
+                                                        <input type="text" id="grandTotal"
+                                                               class="text-right form-control" name="grand_total_price"
+                                                               value="{{ object.grand_total }}" readonly="readonly">
+                                                    </td>
+                                                    <td>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-right" colspan="9"><b>Paid Amount:</b></td>
+                                                    <td class="text-right">
+                                                        <input type="text" id="paid_amount"
+                                                               class="text-right form-control valid_number"
+                                                               name="paid_amount" value="{{ object.paid_amount }}"
+                                                               onkeyup="calculate_due_amount()"
+                                                               placeholder="0.00" tabindex="18">
+                                                    </td>
+                                                    <td>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-right" colspan="9"><b>Due Amount:</b></td>
+                                                    <td class="text-right">
+                                                        <input type="text" id="due_amount" value="{{ object.due_amount }}"
+                                                               class="text-right form-control" name="due_amount"
+                                                               placeholder="0.00" readonly="readonly">
+                                                    </td>
+                                                    <td>
+                                                    </td>
+                                                </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-md-6 text-right">
+                                            </div>
+                                            <div class="col-md-6 text-right">
+                                                <div class="">
+                                                    <input type="button" id="full_paid_purchase_tab"
+                                                           class="btn btn-warning" value="Full Paid" tabindex="17"
+                                                           onclick="full_pay()">
+                                                    <button type="submit" class="btn btn-success" tabindex="19"
+                                                            id="save_purchase">
+                                                        Save
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </section>
+    </div>
+
+    <script>
+        let action = 'update'
+        let current_rows = '{{ object.purchase_items.count }}'
+    </script>
+
+    <script src="{% static 'js/add_remove_rows.js' %}"></script>
+
+{% endblock content %}
+
+{% block scripts %}
+
+    <script>
+    let leaf_html = undefined
+    let medicine_list = undefined
+
+        function check_payment_method(){
+            let payment_type = $("#payment_type").val();
+            if (payment_type  == 1){
+                $("#bank_div").addClass('d-none');
+                $("#bank_label").addClass('d-none');
+            }
+            else{
+                $("#bank_div").removeClass('d-none');
+                $("#bank_label").removeClass('d-none');
+            }
+        }
+
+        function fetch_medicines(){
+
+                let id = $("#manufacturer_id").val();
+                if (id == 'default'){
+
+                    $(".available_medicine").html('<option value="default"> Select Medicine </option>')
+
+                }
+                else{
+
+                    let data = {
+                         manufacturer_id: id,
+                    }
+
+                    $.ajax({
+                    url: '{% url 'purchase:fetch-medicine' %}',
+                    method: 'get',
+                    data: data,
+                    success: function (data){
+
+                        // dictionary with medicine_id, medicine_name, strength received here.
+
+                        let option = '<option value="default" selected> Select Medicine </option>'
+                        for (let i in data){
+                            let id = data[i]['id']
+                            let name = data[i]['name']
+                            let strength = data[i]['strength']
+
+                            option += '<option value="' + id + '"> ' + name + ' ( ' + strength + ' ) </option>'
+                        }
+
+                        let medicine_html = $(".available_medicine").html(option)  // Update Available medicine for all rows
+
+                        medicine_list = option
+
+                        /*
+
+                         Storing Medicine list from first Row..
+                         used for adding new rows using Plus Button.
+
+                         */
+
+                        identify_selected_medicines(medicine_html);
+
+                    },
+                    error: function (error){
+                        console.log("Error Occurred. ")
+                        console.log(error)
+                    },
+                })
+
+                }
+
+
+        }
+        function identify_selected_medicines(elements){
+
+            let medicine_ids = []
+            $(".selected_medicines").each(function (){  /// class came from hidden input field
+                medicine_ids.push($(this).val())
+            })
+
+            console.log(medicine_ids)
+
+            for (let i = 0; i< medicine_ids.length; i++){
+                $(elements[i]).val(medicine_ids[i]);
+            }
+
+        }
+
+
+        $(document).ready(function (){
+            check_payment_method();
+            fetch_medicines();
+
+            $("#payment_type").on('change', check_payment_method());
+
+            /* Storing Leaf html from first Row in leaf_html variable.
+
+            It will be inserted into box pattern column when AddRow (Plus button) is clicked. */
+
+            leaf_html = $("#leaf_type_1").html()
+
+            // Getting all the medicines of selected manufacturers.
+            $("#manufacturer_id").on('change', function (){
+
+                $(".product_rate").val('0.00')
+                $(".mrp").val('0.00')
+
+                fetch_medicines();
+
+            });
+
+        });
+
+    </script>
+
+    <script>
+
+
+        $(document).on('change', '.available_medicine', function (){
+            let row_number = $(this).attr('data-row')
+            let medicine_id = $(this).val()
+
+            let data = {
+                medicine_id: medicine_id,
+            }
+
+            if (medicine_id == 'default'){
+                $("#product_rate_"+row_number).val('0.00')
+                $("#mrp_"+row_number).val('0.00')
+            }
+            else{
+                $.ajax({
+                   url: '{% url 'purchase:fetch_price' %}',
+                   method: 'get',
+                   data: data,
+                   success: function (data){
+                       $("#product_rate_"+row_number).val(data['manufacturer_price'])
+                       $("#mrp_"+row_number).val(data['box_price'])
+                       $("#available_quantity_"+row_number).val(data['stock'])
+                   },
+                   error: function (error){
+                       console.log(error)
+                   }
+                });
+            }
+
+        });
+
+
+    </script>
+
+
+    <script>
+
+    let number_per_box = 0
+
+    function calculate_line_total(input_field, row_id, value){
+
+        row_id = parseInt(row_id.replace(/[^0-9.]/g, "")) // extracting number from string.
+
+        let box_quantity = $("#box_quantity_"+row_id).val() || 0
+
+        let leaf_type = $("#leaf_type_"+row_id).val()
+
+        if (input_field == 'select'){
+
+            let data = {
+                    leaf_id: value
+                }
+            $.ajax({
+                    url: '{% url 'purchase:fetch-quantity' %}',
+                    method: 'get',
+                    data: data,
+                    success: function (data){
+                        number_per_box = data['number_per_box']
+                        box_quantity = $("#box_quantity_"+row_id).val() || 0
+
+
+                        // Calculating total quantity & line total price
+                        $("#quantity_"+row_id).val(parseInt(number_per_box) * box_quantity)
+                        $("#total_price_"+row_id).val(parseInt($("#product_rate_"+row_id).val()) * box_quantity)
+
+
+                        // Calculating Subtotal
+                        calculate_subtotal();
+
+                    },
+                    error:function (error){
+                        console.log(error)
+                    }
+                });
+
+        }else{
+
+            let data = {
+                leaf_id: leaf_type
+            }
+
+             $.ajax({
+                    url: '{% url 'purchase:fetch-quantity' %}',
+                    method: 'get',
+                    data: data,
+                    success: function (data){
+                        number_per_box = data['number_per_box']
+                        box_quantity = $("#box_quantity_"+row_id).val() || 0
+                        // Calculating Subtotal
+                    },
+                    error:function (error){
+                        console.log(error)
+                    }
+                });
+
+            // Calculating total quantity & line total price
+            $("#quantity_"+row_id).val(parseInt(number_per_box) * value)
+            $("#total_price_"+row_id).val(parseInt($("#product_rate_"+row_id).val()) * value)
+
+            // Calculating Subtotal
+            calculate_subtotal();
+        }
+
+    }
+    </script>
+
+    <script>
+        function calculate_subtotal(){
+            let subtotal = 0
+
+            $('.total_price').each(function(){
+                 subtotal += parseFloat(this.value);
+             });
+
+
+            $("#sub_total").val(subtotal);
+
+            calculate_grand_total();
+
+        }
+
+        function calculate_grand_total(){
+            let sub_total = $("#sub_total").val() || 0
+            let vat = $("#vat").val() || 0
+            let discount = $("#discount").val() || 0
+
+            let grand_total = parseFloat(sub_total) + parseFloat(vat) - parseFloat(discount)
+            $("#grandTotal").val(grand_total);
+
+            calculate_due_amount();
+        }
+
+        function calculate_due_amount(){
+            let grand_total = $("#grandTotal").val() || 0
+            let paid_total = $("#paid_amount").val() || 0
+
+            let due_amount = parseFloat(grand_total) - parseFloat(paid_total)
+
+            $("#due_amount").val(due_amount);
+        }
+
+    </script>
+
+
+
+{% endblock scripts %}

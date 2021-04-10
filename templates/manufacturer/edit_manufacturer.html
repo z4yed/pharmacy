@@ -1,0 +1,226 @@
+{% extends  'base.html' %}
+{% load static %}
+
+{% block title %}
+    <title>Update Manufacturer</title>
+{% endblock title %}
+
+{% block styles %}
+{% endblock styles %}
+
+{% block content %}
+
+    {% include 'sidebar.html' %}
+
+    <div class="content-wrapper" style="min-height: 201px;">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0 text-dark">Dashboard</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">Dashboard v1</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <span> {% include 'messages.html' %} </span>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <!-- Small boxes (Stat box) -->
+
+                <div class="body-content px-3 py-3">
+
+
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12">
+                            <div class="card">
+                                <div class="card-header py-2">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h6 class="fs-17 font-weight-600 mb-0">Update Manufacturer</h6>
+                                        </div>
+                                        <div class="text-right">
+                                            <a href="{% url 'manufacturer:add-manufacturer' %}"
+                                               class="btn btn-success btn-sm mr-1"><i
+                                                    class="fas fa-align-justify mr-1"></i>Add Manufacturer</a>
+                                            <a href="{% url 'manufacturer:manufacturer-list' %}"
+                                               class="btn btn-primary btn-sm mr-1"><i
+                                                    class="fas fa-align-justify mr-1"></i>Manufacturer List</a>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <form action="{% url 'manufacturer:edit-manufacturer' manufacturer.id %}" id="edit_customer_form"
+                                          enctype="multipart/form-data" method="post" accept-charset="utf-8">
+
+                                        {% csrf_token %}
+
+                                        <div class="form-group row">
+                                            <label for="manufacturer_name" class="col-md-2 text-right col-form-label">Manufacturer
+                                                Name <i class="text-danger"> * </i>:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <input type="text" name="manufacturer_name" class="form-control"
+                                                           id="manufacturer_name" placeholder="Customer Name" value="{{ manufacturer.name }}">
+                                                </div>
+                                            </div>
+                                            <label for="customer_mobile" class="col-md-2 text-right col-form-label">Mobile
+                                                No <i class="text-danger"> * </i>:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <input type="text" name="manufacturer_mobile"
+                                                       class="form-control text-left numberField"
+                                                       id="manufacturer_mobile" placeholder="Mobile No" value="{{ manufacturer.mobile_number }}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="customer_email" class="col-md-2 text-right col-form-label">Email
+                                                Address1:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <input type="email" class="form-control input-mask-trigger"
+                                                           name="first_email" id="first_email"
+                                                           placeholder="Email" value="{{ manufacturer.first_email }}">
+                                                </div>
+                                            </div>
+                                            <label for="email_address" class="col-md-2 text-right col-form-label">Email
+                                                Address2:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <input type="text" class="form-control" name="second_email"
+                                                           id="second_email" placeholder="Email Address" value="{{ manufacturer.second_email }}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="phone" class="col-md-2 text-right col-form-label">Phone:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+
+                                                    <input class="form-control numberField text-left" id="phone"
+                                                           type="number" name="phone" placeholder="Phone"
+                                                           value="{{ manufacturer.phone }}">
+                                                </div>
+                                            </div>
+                                            <label for="contact"
+                                                   class="col-md-2 text-right col-form-label">Contact:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <input class="form-control" id="contact" type="text" name="contact"
+                                                           placeholder="Contact" value="{{ manufacturer.contact }}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="address1" class="col-md-2 text-right col-form-label">Address
+                                                1:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <textarea name="first_address" id="first_address"
+                                                              class="form-control" placeholder="Address 1">{{ manufacturer.first_address }}</textarea>
+                                                </div>
+                                            </div>
+                                            <label for="address2" class="col-md-2 text-right col-form-label">Address
+                                                2:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <textarea name="second_address" id="second_address" class="form-control"
+                                                              placeholder="Address 2">{{ manufacturer.second_address }}</textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="fax" class="col-md-2 text-right col-form-label">Fax:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <input type="text" name="fax" class="form-control" id="fax"
+                                                           placeholder="Fax" value="{{ manufacturer.fax }}">
+                                                </div>
+                                            </div>
+                                            <label for="city" class="col-md-2 text-right col-form-label">City:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <input type="text" name="city" class="form-control" id="city"
+                                                           placeholder="City" value="{{ manufacturer.city }}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="state" class="col-md-2 text-right col-form-label">State:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <input type="text" name="state" class="form-control" id="state"
+                                                           placeholder="State" value="{{ manufacturer.state }}">
+                                                </div>
+                                            </div>
+                                            <label for="zip" class="col-md-2 text-right col-form-label">Zip:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <input name="zip" type="text" class="form-control" id="zip"
+                                                           placeholder="Zip" value="{{ manufacturer.zip }}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="country"
+                                                   class="col-md-2 text-right col-form-label">Country:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <input name="country" type="text" class="form-control "
+                                                           placeholder="Country" id="country" value="{{ manufacturer.country }}">
+                                                </div>
+                                            </div>
+                                            <label for="previous_balance" class="col-md-2 text-right col-form-label">Previous
+                                                Balance:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <input name="previous_balance" type="text"
+                                                           class="form-control text-right"
+                                                           placeholder="Previous Balance" value="{{ manufacturer.previous_balance }}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-md-6 text-right">
+                                            </div>
+                                            <div class="col-md-6 text-right">
+                                                <div class="">
+                                                    <button type="submit" class="btn btn-success">
+                                                        Update
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <!-- /.row (main row) -->
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
+
+
+{% endblock content %}
+
+{% block scripts %}
+
+{% endblock scripts %}

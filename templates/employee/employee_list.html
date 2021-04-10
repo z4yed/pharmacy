@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    <title>Employee List</title>
+{% endblock title %}
+
+
+{% block styles %}
+{% endblock styles %}
+
+
+
+{% block content %}
+
+    {% include 'sidebar.html' %}
+
+    <div class="content-wrapper" style="min-height: 201px;">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0 text-dark">Dashboard</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">Dashboard v1</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <span> {% include 'messages.html' %} </span>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <!-- Small boxes (Stat box) -->
+
+                <div class="body-content px-3 py-3">
+
+
+                    <div class="row">
+                        <div class="col-md-12 col-md-12">
+                            <div class="card ">
+                                <div class="card-header py-2">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h6 class="fs-17 font-weight-600 mb-0">Employee List</h6>
+                                        </div>
+                                        <div class="text-right">
+                                            <a href="{% url 'employee:add_employee' %}"
+                                               class="btn btn-success btn-sm mr-1"><i class="fas fa-plus mr-1"></i>Add
+                                                Employee</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <div id="EmployeeList_wrapper"
+                                             class="no-footer">
+                                            <table class="table display table-bordered table-striped table-hover custom-table no-footer dtr-inline"
+                                                   cellspacing="0" width="100%" id="EmployeeList" role="grid"
+                                                   aria-describedby="EmployeeList_info" style="width: 100%;">
+                                                <thead>
+                                                <tr role="row">
+                                                    <th class="sorting_disabled" rowspan="1" colspan="1"
+                                                        style="width: 13px;" aria-label="Sl">Sl
+                                                    </th>
+                                                    <th class="sorting_asc" tabindex="0" aria-controls="EmployeeList"
+                                                        rowspan="1" colspan="1" style="width: 72px;"
+                                                        aria-sort="ascending"
+                                                        aria-label="First Name: activate to sort column descending">
+                                                        First Name
+                                                    </th>
+                                                    <th class="sorting_disabled" rowspan="1" colspan="1"
+                                                        style="width: 70px;" aria-label="Last Name">Last Name
+                                                    </th>
+                                                    <th class="sorting_disabled" rowspan="1" colspan="1"
+                                                        style="width: 87px;" aria-label="Designation">Designation
+                                                    </th>
+                                                    <th class="sorting_disabled" rowspan="1" colspan="1"
+                                                        style="width: 95px;" aria-label="Phone">Phone
+                                                    </th>
+                                                    <th class="sorting_disabled" rowspan="1" colspan="1"
+                                                        style="width: 98px;" aria-label="Email">Email
+                                                    </th>
+                                                    <th class="sorting_disabled" rowspan="1" colspan="1"
+                                                        style="width: 83px;" aria-label="Blood Group">Blood Group
+                                                    </th>
+                                                    <th class="sorting_disabled" rowspan="1" colspan="1"
+                                                        style="width: 114px;" aria-label="Hour Rate/Salary">Hour
+                                                        Rate/Salary
+                                                    </th>
+                                                    <th class="sorting_disabled" rowspan="1" colspan="1"
+                                                        style="width: 54px;" aria-label="Country">Country
+                                                    </th>
+                                                    <th class="sorting_disabled" rowspan="1" colspan="1"
+                                                        style="width: 49px;" aria-label="Images">Images
+                                                    </th>
+                                                    <th class="sorting_disabled" rowspan="1" colspan="1"
+                                                        style="width: 45px;" aria-label="Action">Action
+                                                    </th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                {% for employee in employees %}
+
+
+                                                    <tr role="row">
+                                                        <td tabindex="0">{{ forloop.counter }}</td>
+                                                        <td class="sorting_1">{{ employee.first_name }}</td>
+                                                        <td>{{ employee.last_name }}</td>
+                                                        <td>{{ employee.designation }}</td>
+                                                        <td>{{ employee.phone }}</td>
+                                                        <td>{{ employee.email }}</td>
+                                                        <td>{{ employee.blood_group }}</td>
+                                                        <td>{{ employee.salary }}</td>
+                                                        <td>{{ employee.country }}</td>
+                                                        <td><img
+                                                                src="{{ employee.image_url }}"
+                                                                class="img img-responsive" height="50" width="50"></td>
+                                                        <td>
+                                                            <a href="{% url 'employee:update_employee' employee.id %}"
+                                                               class="btn btn-success btn-sm" data-toggle="tooltip"
+                                                               data-placement="left" title="Update"><i class="fas fa-edit"
+                                                                                                       aria-hidden="true"></i></a>
+                                                            <a onclick="return confirm('Are You Sure ?')"
+                                                               href="{% url 'employee:remove_employee' employee.id %}"
+                                                               class="btn btn-danger btn-sm" data-toggle="tooltip"
+                                                               data-placement="right" title="Delete "><i
+                                                                    class="far fa-trash-alt" aria-hidden="true"></i></a>
+                                                        </td>
+                                                    </tr>
+
+                                                {% endfor %}
+
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- /.row (main row) -->
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
+
+{% endblock content %}
+
+
+{% block script %}
+{% endblock script %}

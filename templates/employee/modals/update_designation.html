@@ -1,0 +1,41 @@
+{% load static %}
+
+<!-- Modal -->
+<div class="modal fade" id="update_designation{{ designation.id }}" role="dialog">
+    <form action="{% url 'employee:update_designation' designation.id %}" method="post"> {% csrf_token %}
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Update Designation</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="row my-3">
+                        <div class="col-md-12">
+                            <label for="unit_name" class="form-control-label">Designation Name</label>
+                            <input type="text" name="designation_name" id="designation_name" value="{{ designation.name }}" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="row my-3">
+                        <div class="col-md-12">
+                            <label for="unit_name" class="form-control-label">Details</label>
+                            <textarea type="text" name="details" id="details" class="form-control">{{ designation.details }} </textarea>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" value="Add" class="btn btn-success">
+                    <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+</div>

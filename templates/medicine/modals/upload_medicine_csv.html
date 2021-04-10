@@ -1,0 +1,41 @@
+{% load static %}
+
+<!-- Modal -->
+<div class="modal fade" id="csv_medicine_modal" role="dialog">
+<form action="{% url 'medicine:upload-medicine-csv' %}" method="post" enctype="multipart/form-data"> {% csrf_token %}
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h4 class="modal-title">Upload CSV</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <div class="modal-body">
+            <div class="row my-3">
+                <div class="col-md-12">
+                    <a class="btn btn-success" href="{% static 'csv/manufacturer_csv_sample.csv' %}" download><i class="fa fa-download">&nbsp;</i>Download Sample</a>
+                </div>
+            </div>
+
+
+                <div class="row my-3">
+                    <div class="col-md-8">
+                        <label for="csv_input" class="form-label">Upload CSV File</label>
+                        <input type="file" value="Upload" name="csv_file" id="csv_input" class="form-control">
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <input type="submit" value="Submit" class="btn btn-success">
+              <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+            </div>
+      </div>
+    </div>
+
+     </form>
+
+</div>

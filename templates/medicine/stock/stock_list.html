@@ -1,0 +1,227 @@
+{% extends  'base.html' %}
+{% load static %}
+{% block title %}
+    <title>Stock Report</title>
+{% endblock title %}
+
+
+{% block styles %}
+{% endblock styles %}
+
+{% block content %}
+
+    {% include 'sidebar.html' %}
+
+    <div class="content-wrapper" style="min-height: 201px;">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0 text-dark">Dashboard</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">Dashboard v1</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <span> {% include 'messages.html' %} </span>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <!-- Small boxes (Stat box) -->
+
+                <div class="body-content px-3 py-3">
+
+
+                    <div class="row">
+                        <div class="col-md-12 col-md-12">
+                            <div class="card ">
+                                <div class="card-header py-2">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h6 class="fs-17 font-weight-600 mb-0">Stock Report</h6>
+                                        </div>
+                                        <div class="text-right">
+                                            <a href="{% url 'medicine:stock-list-batch' %}"
+                                               class="btn btn-success btn-sm mr-1"><i
+                                                    class="fas fa-align-justify mr-1"></i>Stock Report(Batch Wise)</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <div id="StockList_wrapper" class="dataTables_wrapper dt-bootstrap4">
+
+                                            <table class="table display table-bordered table-striped table-hover custom-table dataTable dtr-inline collapsed"
+                                                   width="100%" id="StockList" role="grid"
+                                                   aria-describedby="StockList_info" style="width: 100%;">
+                                                <thead>
+                                                <tr role="row">
+                                                    <th class="text-center sorting_disabled" rowspan="1" colspan="1"
+                                                        style="width: 17px;" aria-label="Sl">Sl
+                                                    </th>
+                                                    <th class="text-center sorting_asc" tabindex="0"
+                                                        aria-controls="StockList" rowspan="1" colspan="1"
+                                                        style="width: 113px;" aria-sort="ascending"
+                                                        aria-label="Medicine Name: activate to sort column descending">
+                                                        <nobr>Medicine Name</nobr>
+                                                    </th>
+                                                    <th class="text-center sorting_disabled" rowspan="1" colspan="1"
+                                                        style="width: 143px;" aria-label="Manufacturer Name">
+                                                        <nobr>Manufacturer Name</nobr>
+                                                    </th>
+                                                    <th class="text-center text-right sorting_disabled" rowspan="1"
+                                                        colspan="1" style="width: 73px;" aria-label="Sale Price">
+                                                        <nobr>Sale Price</nobr>
+                                                    </th>
+                                                    <th class="text-center text-right sorting_disabled" rowspan="1"
+                                                        colspan="1" style="width: 108px;" aria-label="Purchase Price">
+                                                        <nobr>Purchase Price</nobr>
+                                                    </th>
+                                                    <th class="text-center sorting_disabled" rowspan="1" colspan="1"
+                                                        style="width: 47px;" aria-label="In Qty">
+                                                        <nobr>In Qty</nobr>
+                                                    </th>
+                                                    <th class="text-center sorting_disabled" rowspan="1" colspan="1"
+                                                        style="width: 60px;" aria-label="Out Qty">
+                                                        <nobr>Out Qty</nobr>
+                                                    </th>
+                                                    <th class="text-center stock sorting_disabled" rowspan="1"
+                                                        colspan="1" style="width: 63px;" aria-label="Stock">
+                                                        <nobr>Stock</nobr>
+                                                    </th>
+                                                    <th class="text-center total_sale text-right sorting_disabled"
+                                                        rowspan="1" colspan="1" style="width: 119px;"
+                                                        aria-label="Stock Sale Price">
+                                                        <nobr>Stock <br> Sale Price</nobr>
+                                                    </th>
+                                                    <th class="text-center total_purchase text-right sorting_disabled"
+                                                        rowspan="1" colspan="1" style="width: 0px;"
+                                                        aria-label="Stock Purchase Price">
+                                                        <nobr>Stock <br> Purchase Price</nobr>
+                                                    </th>
+
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                {% for medicine in medicines %}
+
+                                                    <tr role="row">
+                                                        <td tabindex="0" style="">{{ forloop.counter }}</td>
+                                                        <td class="sorting_1">{{ medicine.medicine_name }}( {{ medicine.strength }} )</td>
+                                                        <td>{{ medicine.manufacturer.name }}</td>
+                                                        <td class=" text-right">${{ medicine.price_one }}</td>
+                                                        <td class=" text-right">${{ medicine.manufacturer_price_one }}</td>
+                                                        <td>{{ medicine.in_quantity }}</td>
+                                                        <td>{{ medicine.total_sold }}</td>
+                                                        <td class=" stock">{{ medicine.total_stock }}</td>
+                                                        <td class=" total_sale text-right">${{ medicine.stock_sale_price }}</td>
+                                                        <td class="total_purchase text-right">
+                                                            ${{ medicine.stock_purchase_price }}
+                                                        </td>
+                                                    </tr>
+
+                                                 {% endfor %}
+
+                                                </tbody>
+                                                <tfoot>
+                                                <tr>
+                                                    <th colspan="7" class="text-right" rowspan="1">Total:</th>
+                                                    <th id="stock" class="stock" rowspan="1" colspan="1">121,514</th>
+                                                    <th id="stock_sale" class="total_sale text-right" rowspan="1" colspan="1">$
+
+                                                    </th>
+                                                    <th id="stock_purchase" class="total_purchase text-right" rowspan="1" colspan="1"
+                                                       >
+                                                    </th>
+                                                </tr>
+                                                </tfoot>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+    </div>
+
+
+{% endblock content %}
+
+{% block scripts %}
+    <script>
+        $(document).ready(function (){
+
+            $('#StockList').DataTable( {
+        "footerCallback": function ( row, data, start, end, display ) {
+            var api = this.api(), data;
+
+            // Remove the formatting to get integer data for summation
+            var intVal = function ( i ) {
+                return typeof i === 'string' ?
+                    i.replace(/[\$,]/g, '')*1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };
+
+            // Total over all pages
+            total = api
+                .column( 9 )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+
+            // Total over this page
+            let stock = api
+                .column( 7, { page: 'current'} )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+
+            let stock_sale = api
+                .column( 8, { page: 'current'} )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+
+            let stock_purchase = api
+                .column( 9, { page: 'current'} )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+
+            // Update footer
+            $("#stock").html(stock.toFixed(0))
+            $("#stock_sale").html('BDT: ' + stock_sale.toFixed(2))
+            $("#stock_purchase").html('BDT: ' + stock_purchase.toFixed(2))
+        }
+    } );
+
+        });
+    </script>
+
+{% endblock scripts %}
+
+
+
+
+

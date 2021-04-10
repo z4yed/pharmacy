@@ -1,0 +1,42 @@
+{% load static %}
+
+<!-- Modal -->
+<div class="modal fade" id="update_type{{ type.id }}" role="dialog">
+<form action="{% url 'medicine:update-type' type.id %}" method="post"> {% csrf_token %}
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h4 class="modal-title">Update Unit</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <div class="modal-body">
+            <div class="row my-3">
+                <div class="col-md-12">
+                    <label for="type_name" class="form-control-label">Unit Name</label>
+                    <input type="text" name="type_name" id="type_name" value="{{ type.name }}" class="form-control">
+                </div>
+            </div>
+
+            <div class="row my-3">
+                <div class="col-md-12">
+                    <label for="type_status" class="form-control-label">Status: </label>
+                    <label class="radio-inline ml-4"><input type="radio" name="type_status" value="1" class="mx-2" {% if type.is_active %} checked {% endif %}>Active</label>
+                    <label class="radio-inline ml-2"><input type="radio" name="type_status" value="0" class="mx-2" {% ifequal type.is_active False %} checked {% endifequal %}> Inactive</label>
+                </div>
+            </div>
+
+            </div>
+            <div class="modal-footer">
+                <input type="submit" value="Update" class="btn btn-success">
+              <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+            </div>
+      </div>
+    </div>
+
+     </form>
+
+</div>

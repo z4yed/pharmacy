@@ -1,0 +1,230 @@
+{% extends  'base.html' %}
+{% load static %}
+{% block title %}
+    <title>Purchase Report (Category)</title>
+{% endblock title %}
+
+
+{% block styles %}
+{% endblock styles %}
+
+{% block content %}
+
+    {% include 'sidebar.html' %}
+
+    <div class="content-wrapper" style="min-height: 201px;">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0 text-dark">Dashboard</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">Dashboard v1</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <span> {% include 'messages.html' %} </span>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <!-- Small boxes (Stat box) -->
+
+                <div class="body-content px-3 py-3">
+
+
+                    <div class="row">
+                        <div class="col-md-12 col-md-12">
+                            <div class="card ">
+                                <div class="card-header py-2">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h6 class="fs-17 font-weight-600 mb-0">Purchase Report(Category)</h6>
+                                        </div>
+                                        <div class="text-right">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <form action="" class="form-inline" method="post" accept-charset="utf-8"> {% csrf_token %}
+                                                <div class="input-group mb-2 mr-sm-2 list-width">
+                                                    <select name="category_id_report"
+                                                            class="form-control"
+                                                            id="category_id" data-select2-id="select2-data-category_id"
+                                                            tabindex="-1" aria-hidden="true">
+                                                        <option value="" selected="selected"
+                                                                data-select2-id="select2-data-2-rq96">Select Category
+                                                        </option>
+                                                        {% for category in categories %}
+                                                            <option value="{{ category.id }}">{{ category.name }}</option>
+                                                        {% endfor %}
+
+                                                    </select>
+                                                </div>
+                                                <label class="sr-only" for="from_date">Start Date</label>
+                                                <div class="input-group mb-2 mr-sm-2">
+                                                    <div class="input-group-prepend">
+                                                        <div class="input-group-text">Start Date</div>
+                                                    </div>
+                                                    <input type="text" class="form-control datepicker psdate"
+                                                           name="from_date" id="from_date" placeholder="Start Date"
+                                                           value="">
+                                                </div>
+                                                <label class="sr-only" for="to_date">End Date</label>
+                                                <div class="input-group mb-2 mr-sm-2">
+                                                    <div class="input-group-prepend">
+                                                        <div class="input-group-text">End Date</div>
+                                                    </div>
+                                                    <input type="text" class="form-control datepicker pedate"
+                                                           id="to_date" name="to_date" placeholder="End Date">
+                                                </div>
+                                                <button type="submit" id="btn-filter-pur" class="btn btn-success mb-2">
+                                                    Find
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <div id="purchaseReportCategorywise_wrapper"
+                                             class="dataTables_wrapper dt-bootstrap4">
+                                            <table class="table table-striped table-bordered custom-table dataTable dtr-inline"
+                                                   cellspacing="0" width="100%" id="purchaseReportCategorywise"
+                                                   role="grid" aria-describedby="purchaseReportCategorywise_info"
+                                                   style="width: 100%;">
+                                                <thead>
+                                                <tr role="row">
+                                                    <th class="sorting_disabled" rowspan="1" colspan="1"
+                                                        style="width: 22px;" aria-label="Sl">Sl
+                                                    </th>
+                                                    <th class="sorting_disabled" rowspan="1" colspan="1"
+                                                        style="width: 126px;" aria-label="Category Name">Category Name
+                                                    </th>
+                                                    <th class="sorting_disabled" rowspan="1" colspan="1"
+                                                        style="width: 123px;" aria-label="Medicine Name">Medicine Name
+                                                    </th>
+                                                    <th class="sorting_disabled" rowspan="1" colspan="1"
+                                                        style="width: 158px;" aria-label="Manufacturer Name">
+                                                        Manufacturer Name
+                                                    </th>
+                                                    <th class="sorting_desc" tabindex="0"
+                                                        aria-controls="purchaseReportCategorywise" rowspan="1"
+                                                        colspan="1" style="width: 45px;" aria-sort="descending"
+                                                        aria-label="Date: activate to sort column ascending">Date
+                                                    </th>
+                                                    <th class="total_sale text-right sorting_disabled" rowspan="1"
+                                                        colspan="1" style="width: 74px;" aria-label="Quantity">Quantity
+                                                    </th>
+                                                    <th class="sorting_disabled" rowspan="1" colspan="1"
+                                                        style="width: 46px;" aria-label="Price">Price
+                                                    </th>
+                                                    <th class="sorting_disabled" rowspan="1" colspan="1"
+                                                        style="width: 45px;" aria-label="Total">Total
+                                                    </th>
+                                                    <th class="sorting_disabled" rowspan="1" colspan="1"
+                                                        style="width: 103px;" aria-label="Purchase By">Purchase By
+                                                    </th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for item in purchases_items %}
+
+                                                        <tr role="row">
+                                                            <td tabindex="0">{{ forloop.counter }}</td>
+                                                            <td>{{ item.batch.medicine.category.name }}</td>
+                                                            <td>{{ item.batch.medicine.medicine_name }}</td>
+                                                            <td>{{ item.batch.medicine.manufacturer.name }}</td>
+                                                            <td>{{ item.order.date }}</td>
+                                                            <td>{{ item.batch.total_quantity }}</td>
+                                                            <td class="sorting_1">{{ item.batch.medicine.manufacturer_price_one }}</td>
+                                                            <td class=" total_sale text-right">{{ item.calculated_price | floatformat:2 }}</td>
+                                                            <td>Admin User</td>
+                                                        </tr>
+
+                                                    {% endfor %}
+                                                </tbody>
+                                                <tfoot>
+                                                <tr>
+                                                    <th colspan="6" id="total_qntt" class="text-right total_sale" rowspan="1">$ 0.00
+                                                    <th colspan=""></th>
+                                                    <th class="text-right" id="total_amount" rowspan="1">$ 0.00
+                                                    </th>
+                                                </tr>
+                                                </tfoot>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </section>
+    </div>
+
+{% endblock content %}
+
+{% block scripts %}
+    <script>
+        $(document).ready(function () {
+
+            $('#purchaseReportCategorywise').DataTable({
+                "footerCallback": function (row, data, start, end, display) {
+                    var api = this.api(), data;
+
+                    // Remove the formatting to get integer data for summation
+                    var intVal = function (i) {
+                        return typeof i === 'string' ?
+                            i.replace(/[\$,]/g, '') * 1 :
+                            typeof i === 'number' ?
+                                i : 0;
+                    };
+
+                    // Total over all pages
+                    // total = api
+                    //    .column( 9 )
+                    //    .data()
+                    //    .reduce( function (a, b) {
+                    //        return intVal(a) + intVal(b);
+                    //    }, 0 );
+
+                    // Total over this page
+                    let total_qntt = api
+                        .column(5, {page: 'current'})
+                        .data()
+                        .reduce(function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
+                    let total_amount = api
+                        .column(7, {page: 'current'})
+                        .data()
+                        .reduce(function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
+
+                    // Update footer
+                    $("#total_qntt").html(total_qntt.toFixed(0))
+                    $("#total_amount").html('BDT: ' + total_amount.toFixed(2))
+                }
+            });
+
+        });
+    </script>
+
+{% endblock scripts %}
+
+

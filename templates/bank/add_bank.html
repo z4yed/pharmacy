@@ -1,0 +1,179 @@
+{% extends  'base.html' %}
+{% load static %}
+
+{% block title %}
+    <title>Add Bank</title>
+{% endblock title %}
+
+{% block styles %}
+{% endblock styles %}
+
+{% block content %}
+
+    {% include 'sidebar.html' %}
+
+    <div class="content-wrapper" style="min-height: 201px;">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0 text-dark">Dashboard</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">Dashboard v1</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <span> {% include 'messages.html' %} </span>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <!-- Small boxes (Stat box) -->
+
+                <div class="body-content px-3 py-3">
+
+
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12">
+                            <div class="card">
+                                <div class="card-header py-2">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h6 class="fs-17 font-weight-600 mb-0">Add Bank</h6>
+                                        </div>
+                                        <div class="text-right">
+                                            <a href="{% url 'bank:bank-list' %}"
+                                               class="btn btn-success btn-sm mr-1"><i
+                                                    class="fas fa-align-justify mr-1"></i>Bank List</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <form action="{% url 'bank:add-bank' %}"
+                                          enctype="multipart/form-data" method="post" accept-charset="utf-8">
+
+                                        {% csrf_token %}
+
+                                        <div class="form-group row">
+                                            <label for="bank_name" class="col-md-2 text-right col-form-label">Bank Name
+                                                <i class="text-danger"> * </i>:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <input type="text" name="bank_name" class="form-control"
+                                                           id="bank_name" placeholder="Bank Name" value="">
+                                                    <input type="hidden" name="old_name" value="">
+                                                </div>
+                                            </div>
+                                            <label for="ac_name" class="col-md-2 text-right col-form-label">Account Name
+                                                <i class="text-danger"> * </i>:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <input type="text" name="ac_name"
+                                                           class="form-control input-mask-trigger text-left"
+                                                           id="ac_name" placeholder="Account Name" value=""
+                                                           data-inputmask="'alias': 'decimal', 'groupSeparator': '', 'autoGroup': true"
+                                                           im-insert="true">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="ac_number" class="col-md-2 text-right col-form-label">Account
+                                                Number <i class="text-danger"> * </i>:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <input type="text"
+                                                           class="form-control input-mask-trigger valid_number"
+                                                           name="ac_number" id="ac_number"
+                                                           data-inputmask="'alias': 'email'" im-insert="true"
+                                                           placeholder="Account Number" value="">
+                                                </div>
+                                            </div>
+                                            <label for="branch"
+                                                   class="col-md-2 text-right col-form-label">Branch:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <input type="text" class="form-control" name="branch" id="branch"
+                                                           placeholder="Branch" value="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="signature_pic" class="col-md-2 text-right col-form-label">Signature
+                                                Picture:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <input class="form-control input-mask-trigger text-left"
+                                                           id="signature_pic" type="file" name="signature"
+                                                           placeholder="Signature Picture"
+                                                           data-inputmask="'alias': 'decimal', 'groupSeparator': '', 'autoGroup': true"
+                                                           im-insert="true">
+                                                    <input type="hidden" name="old_image" value="">
+                                                </div>
+                                            </div>
+                                            <label for="status" class="col-md-2 text-right col-form-label">Status <i
+                                                    class="text-danger"> * </i>:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <label class="radio-inline my-2">
+                                                        <input type="radio" name="status" value="1" checked="checked"
+                                                               id="status">
+                                                        Active
+                                                    </label>
+                                                    <label class="radio-inline my-2">
+                                                        <input type="radio" name="status" value="0" id="status">
+                                                        Inactive
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="preview"
+                                                   class="col-md-2 text-right col-form-label">Preview:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <img id="blah" class="img-thambnail"
+                                                         src="https://pharmacyv5.bdtask.com/pharmacare-9.4_demo/assets/dist/img/bank/bank.jpg"
+                                                         alt="your image" height="70px" width="70px;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-md-6 text-right">
+                                            </div>
+                                            <div class="col-md-6 text-right">
+                                                <div class="">
+                                                    <button type="submit" class="btn btn-success">
+                                                        Save
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <!-- /.row (main row) -->
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
+
+
+{% endblock content %}
+
+{% block scripts %}
+
+{% endblock scripts %}

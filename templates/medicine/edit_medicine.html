@@ -1,0 +1,383 @@
+{% extends  'base.html' %}
+
+{% block title %}
+    <title>Update Medicine</title>
+{% endblock title %}
+
+
+{% block styles %}
+{% endblock styles %}
+
+{% block content %}
+
+    {% include 'sidebar.html' %}
+
+    <div class="content-wrapper" style="min-height: 201px;">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0 text-dark">Dashboard</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">Dashboard v1</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <span> {% include 'messages.html' %} </span>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <!-- Small boxes (Stat box) -->
+
+
+                <div class="body-content px-3 py-3">
+
+
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12">
+                            <div class="card">
+                                <div class="card-header py-2">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h6 class="fs-17 font-weight-600 mb-0">Update Medicine</h6>
+                                        </div>
+                                        <div class="text-right">
+                                            <a href="{% url 'medicine:medicine-list' %}"
+                                               class="btn btn-success btn-sm mr-1"><i
+                                                    class="fas fa-align-justify mr-1"></i>Medicine List</a>
+                                            <button class="client-add-btn btn btn-success md-trigger" type="button"
+                                                    aria-hidden="true" data-toggle="modal"
+                                                    data-target="#csv_medicine_modal" id="csvmodal-link"><i
+                                                    class="fas fa-plus"></i> Upload Csv
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <form action="{% url 'medicine:update-medicine' object.id %}"
+                                          enctype="multipart/form-data" method="post" accept-charset="utf-8"> {% csrf_token %}
+                                        <div class="form-group row">
+                                            <label for="bar_qrcode" class="col-md-2 text-right col-form-label">Bar
+                                                Code/QR Code <i class="text-danger"> </i>:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <input type="text" name="barcode_id" class="form-control numberField"
+                                                           id="bar_qrcode" placeholder="Bar Code/QR Code" value="{{ object.code_text }}">
+                                                </div>
+                                            </div>
+                                            <label for="medicine_name" class="col-md-2 text-right col-form-label">Medicine
+                                                Name <i class="text-danger"> * </i>:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <input type="text" name="medicine_name" class="form-control"
+                                                           id="medicine_name" placeholder="Medicine Name" value="{{ object.medicine_name }}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="strength" class="col-md-2 text-right col-form-label">Strength <i
+                                                    class="text-danger"> </i>:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <input type="text" name="strength"
+                                                           class="form-control input-mask-trigger text-left"
+                                                           id="strength" placeholder="Strength" value="{{ object.strength }}">
+                                                </div>
+                                            </div>
+                                            <label for="generic_name" class="col-md-2 text-right col-form-label">Generic
+                                                Name:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <input type="text" class="form-control" name="generic_name"
+                                                           id="generic_name" placeholder="Generic Name" value="{{ object.generic_name }}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="box_size" class="col-md-2 text-right col-form-label">Box Size <i
+                                                    class="text-danger"> * </i>:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <select name="box_size"
+                                                            class="form-control required"
+                                                            id="box_size"
+                                                            tabindex="-1" aria-hidden="true">
+                                                        <option value="default" selected
+                                                                >Select Leaf
+                                                            Pattern
+                                                        </option>
+                                                        {% for box in box_sizes %}
+                                                            <option value="{{ box.id }}" {% ifequal object.box_size box %} selected {% endifequal %}
+                                                            >{{ box.leaf_type }}({{ box.number_per_box }})</option>
+                                                        {% endfor %}
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <label for="unit" class="col-md-2 text-right col-form-label">Unit <i
+                                                    class="text-danger"> * </i>:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <select name="unit"
+                                                            class="form-control"
+                                                             tabindex="-1" id="unit"
+                                                            aria-hidden="true">
+                                                        <option value="default" selected="selected"
+                                                                >Select Unit
+                                                        </option>
+                                                        {% for unit in units %}
+                                                          <option value="{{ unit.id }}" {% ifequal object.unit unit %} selected {% endifequal %}
+                                                          >{{ unit.name }}</option>
+                                                        {% endfor %}
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="product_location" class="col-md-2 text-right col-form-label">Shelf:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <input class="form-control" id="product_location" type="text"
+                                                           name="product_location" placeholder="Shelf" value="{{ object.shelf }}">
+                                                </div>
+                                            </div>
+                                            <label for="product_details" class="col-md-2 text-right col-form-label">Medicine
+                                                Details:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <input type="text" name="product_details" class="form-control"
+                                                           id="product_details" placeholder="Medicine Details" value="{{ object.details }}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="category" class="col-md-2 text-right col-form-label">Category<i
+                                                    class="text-danger"> * </i>:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <select name="category_id"  id="category"
+                                                            class="form-control"
+                                                            aria-hidden="true">
+                                                        <option value="" selected="selected"
+                                                                >Select Category
+                                                        </option>
+                                                        {% for category in categories %}
+                                                            <option value="{{ category.id }}" {% ifequal object.category category %} selected {% endifequal %}
+                                                            >{{ category.name }}</option>
+                                                        {% endfor %}
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <label for="price" class="col-md-2 text-right col-form-label">Price<i
+                                                    class="text-danger"> * </i>:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <input class="form-control numberField" id="price" type="text"
+                                                           name="price" placeholder="Price" value="{{ object.price }}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="medicine_type" class="col-md-2 text-right col-form-label">Medicine
+                                                Type:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <select name="product_type" id="type"
+                                                            class="form-control"
+                                                            aria-hidden="true">
+                                                        <option value="" selected="selected"
+                                                                >Select Type
+                                                        </option>
+                                                        {% for type in types %}
+                                                            <option value="{{ type.id }}" {% ifequal object.type type %} selected {% endifequal %}
+                                                            >{{ type.name }}</option>
+                                                        {% endfor %}
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <label for="image" class="col-md-2 text-right col-form-label">Image:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <input name="image" type="file" class="form-control" id="image"
+                                                           placeholder="Image" value="">
+                                                    <input name="old_image" type="hidden" class="form-control" value="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="manufacturer_id" class="col-md-2 text-right col-form-label">Manufacturer
+                                                <i class="text-danger"> * </i>:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <select name="manufacturer_id"  id="manufacturer"
+                                                            class="form-control"
+
+                                                            aria-hidden="true">
+                                                        <option value="" selected
+                                                                >Select
+                                                            Manufacturer
+                                                        </option>
+
+                                                        {% for manufacturer in manufacturers %}
+                                                            <option value="{{ manufacturer.id }}" {% ifequal object.manufacturer manufacturer %} selected {% endifequal %}
+                                                            >{{ manufacturer.name }}</option>
+                                                        {% endfor %}
+
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <label for="manufacturer_price" class="col-md-2 text-right col-form-label">Manufacturer
+                                                Price <i class="text-danger"> * </i>:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <input type="text" name="manufacturer_price"
+                                                           class="form-control numberField" id="manufacturer_price"
+                                                           placeholder="Manufacturer Price" value="{{ object.manufacturer_price }}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-group row">
+                                                    <label for="tax" class="col-sm-4 text-right col-form-label">Vat <i
+                                                            class="text-danger"></i>:</label>
+                                                    <div class="col-sm-7">
+                                                        <input type="text" name="tax0" class="form-control"
+                                                               value="{{ object.vat }}">
+                                                    </div>
+                                                    <div class="col-sm-1"><i class="text-success">%</i></div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-6">
+                                                <div class="form-group row">
+                                                    <label for="tax" class="text-right col-sm-4 col-form-label">IGTA <i
+                                                            class="text-danger"></i>:</label>
+                                                    <div class="col-sm-7">
+                                                        <input type="text" name="tax1" class="form-control"
+                                                               value="{{ object.igta }}">
+                                                    </div>
+                                                    <div class="col-sm-1"><i class="text-success">%</i></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="status" class="col-md-2 text-right col-form-label">Status <i
+                                                    class="text-danger"> * </i>:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <label class="radio-inline my-2">
+                                                        <input type="radio" name="status" value="1" {% if object.is_active %} checked {% endif%}
+                                                               id="status">
+                                                        Active
+                                                    </label>
+                                                    <label class="radio-inline my-2">
+                                                        <input type="radio" name="status" value="0" id="status" {% ifequal object.is_active False %}checked {% endifequal %}>
+                                                        Inactive
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <label for="preview"
+                                                   class="col-md-2 text-right col-form-label">Preview:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <img id="blah" class="img-thumbnail"
+                                                         src="https://pharmacyv5.bdtask.com/pharmacare-9.4_demo/assets/dist/img/products/product.png"
+                                                         alt="Med. image" height="70px" width="70px;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-md-6 text-right">
+                                            </div>
+                                            <div class="col-md-6 text-right">
+                                                <div class="">
+                                                    <button type="submit" class="btn btn-success">
+                                                        Update
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="csv_medicine_modal" role="dialog">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h3 class="modal-title">Upload Csv</h3>
+                                        <a href="#" class="close  md-close" data-dismiss="modal">×</a>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="text-right mb-2">
+                                            <a href="https://pharmacyv5.bdtask.com/pharmacare-9.4_demo/assets/csvfile/product_csv_sample.csv"
+                                               class="btn btn-info pull-right"><i class="fa fa-download"></i> Download
+                                                Sample File</a>
+                                        </div>
+                                        <form action="https://pharmacyv5.bdtask.com/pharmacare-9.4_demo/medicine/upload_medicine"
+                                              class="form-vertical" id="csvmedicine" enctype="multipart/form-data"
+                                              method="post" accept-charset="utf-8">
+                                            <input type="hidden" name="app_csrf"
+                                                   value="6797a989147fcbc58072702a8deb5640">
+                                            <div class="form-group row">
+                                                <label for="import_csv" class="col-sm-4 col-form-label">Import Csv <i
+                                                        class="text-danger">*</i></label>
+                                                <div class="col-sm-6">
+                                                    <input class="form-control" name="file" id="file" type="file"
+                                                           placeholder="Import Csv" required="" tabindex="1">
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a href="#" class="btn btn-danger" tabindex="5" data-dismiss="modal">Close</a>
+                                        <input type="submit" tabindex="6" class="btn btn-success" value="Submit">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </section>
+    </div>
+
+
+{% endblock content %}
+
+{% block scripts %}
+
+    <script>
+    $(document).ready(function(){
+        $("#box_size").select2();
+        $("#unit").select2();
+        $("#category").select2();
+        $("#type").select2();
+        $("#manufacturer").select2();
+
+    })
+    </script>
+
+{% endblock scripts %}
+
+
+
+
+

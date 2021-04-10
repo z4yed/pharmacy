@@ -1,0 +1,145 @@
+{% extends  'base.html' %}
+
+{% block title %}
+    <title>Update Service</title>
+{% endblock title %}
+
+
+{% block styles %}
+{% endblock styles %}
+
+{% block content %}
+
+    {% include 'sidebar.html' %}
+
+    <div class="content-wrapper" style="min-height: 201px;">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0 text-dark">Dashboard</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">Dashboard v1</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <span> {% include 'messages.html' %} </span>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <!-- Small boxes (Stat box) -->
+
+                <div class="body-content px-3 py-3">
+
+
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12">
+                            <div class="card ">
+                                <div class="card-header py-2">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h6 class="fs-17 font-weight-600 mb-0">Update Service</h6>
+                                        </div>
+                                        <div class="text-right">
+                                            <a href="{% url 'service:service-list' %}"
+                                               class="btn btn-success btn-sm mr-1"><i
+                                                    class="fas fa-align-justify mr-1"></i>Service List</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <form action="{% url 'service:update-service' object.id %}"
+                                          enctype="multipart/form-data" method="post" accept-charset="utf-8"> {% csrf_token %}
+
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="form-group row">
+                                                    <label for="service_name" class="col-sm-2 col-form-label">Service
+                                                        Name<i class="text-danger">*</i></label>
+                                                    <div class="col-sm-4">
+                                                        <input type="text" name="service_name" id="service_name"
+                                                               class="form-control" value="{{ object.name }}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="form-group row">
+                                                    <label for="charge" class="col-sm-2 col-form-label">Charge<i
+                                                            class="text-danger">*</i></label>
+                                                    <div class="col-sm-4">
+                                                        <input type="number" name="charge" id="charge"
+                                                               class="form-control" value="{{ object.charge }}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="form-group row">
+                                                    <label for="description" class="col-sm-2 col-form-label">Description<i
+                                                            class="text-danger"></i></label>
+                                                    <div class="col-sm-4">
+                                                        <textarea name="description" id="description"
+                                                                  class="form-control">{{ object.description }}</textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="form-group row">
+                                                    <label for="tax" class="col-sm-2 col-form-label">Vat <i
+                                                            class="text-danger"></i></label>
+                                                    <div class="col-sm-4">
+                                                        <input type="text" name="tax0" class="form-control" value="{{ object.vat }}">
+                                                    </div>
+                                                    <div class="col-sm-1"><i class="text-success">%</i></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="form-group row">
+                                                    <label for="tax" class="col-sm-2 col-form-label">IGTA <i
+                                                            class="text-danger"></i></label>
+                                                    <div class="col-sm-4">
+                                                        <input type="text" name="tax1" class="form-control" value="{{ object.igta }}">
+                                                    </div>
+                                                    <div class="col-sm-1"><i class="text-success">%</i></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 text-right">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-4"></label>
+                                                    <div class="col-sm-8">
+                                                        <button type="submit" class="btn btn-success form-control">
+                                                            Update
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- /.row (main row) -->
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
+
+
+{% endblock content %}
+
+{% block scripts %}
+
+{% endblock scripts %}

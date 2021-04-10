@@ -1,0 +1,172 @@
+{% extends  'base.html' %}
+
+{% block title %}
+    <title>Medicine List</title>
+{% endblock title %}
+
+
+{% block styles %}
+{% endblock styles %}
+
+{% block content %}
+
+    {% include 'sidebar.html' %}
+
+    <div class="content-wrapper" style="min-height: 201px;">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0 text-dark">Dashboard</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">Dashboard v1</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <span> {% include 'messages.html' %} </span>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <!-- Small boxes (Stat box) -->
+
+                <div class="body-content px-3 py-3">
+
+
+                    <div class="row">
+                        <div class="col-md-12 col-md-12">
+                            <div class="card ">
+                                <div class="card-header py-2">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h6 class="fs-17 font-weight-600 mb-0">Medicine List</h6>
+                                        </div>
+                                        <div class="text-right">
+                                            <a href="{% url 'medicine:add-medicine' %}"
+                                               class="btn btn-success btn-sm mr-1"><i class="fas fa-plus mr-1"></i>Add
+                                                Medicine</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <div id="MedicineList_wrapper"
+                                             class="dataTables_wrapper dt-bootstrap4 no-footer">
+
+                                            <div id="MedicineList_processing" class="dataTables_processing card"
+                                                 style="display: none;">Processing...
+                                            </div>
+                                            <table class="table display table-bordered table-striped table-hover custom-table "
+                                                   cellspacing="0" width="100%" id="MedicineList" role="grid"
+                                                   aria-describedby="MedicineList_info" style="width: 100%;">
+                                                <thead>
+                                                <tr role="row">
+                                                    <th class="sorting_disabled" rowspan="1" colspan="1"
+                                                        style="width: 15px;" aria-label="Sl">Sl
+                                                    </th>
+                                                    <th class="sorting_asc" tabindex="0" aria-controls="MedicineList"
+                                                        rowspan="1" colspan="1" style="width: 106px;"
+                                                        aria-sort="ascending"
+                                                        aria-label="Medicine Name: activate to sort column descending">
+                                                        Medicine Name
+                                                    </th>
+                                                    <th class="sorting_disabled" rowspan="1" colspan="1"
+                                                        style="width: 97px;" aria-label="Generic Name">Generic Name
+                                                    </th>
+                                                    <th class="sorting_disabled" rowspan="1" colspan="1"
+                                                        style="width: 64px;" aria-label="Category">Category
+                                                    </th>
+                                                    <th class="sorting_disabled" rowspan="1" colspan="1"
+                                                        style="width: 93px;" aria-label="Manufacturer">Manufacturer
+                                                    </th>
+                                                    <th class="sorting_disabled" rowspan="1" colspan="1"
+                                                        style="width: 37px;" aria-label="Shelf">Shelf
+                                                    </th>
+                                                    <th class="sorting_disabled" rowspan="1" colspan="1"
+                                                        style="width: 36px;" aria-label="Price">Price
+                                                    </th>
+                                                    <th class="sorting_disabled" rowspan="1" colspan="1"
+                                                        style="width: 131px;" aria-label="Manufacturer Price">
+                                                        Manufacturer Price
+                                                    </th>
+                                                    <th class="sorting_disabled" rowspan="1" colspan="1"
+                                                        style="width: 62px;" aria-label="Strength">Strength
+                                                    </th>
+                                                    <th class="sorting_disabled" rowspan="1" colspan="1"
+                                                        style="width: 51px;" aria-label="Images">Images
+                                                    </th>
+                                                    <th class="sorting_disabled" rowspan="1" colspan="1"
+                                                        style="width: 89px;" aria-label="Action">Action
+                                                    </th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for medicine in medicines %}
+                                                <tr role="row" class="odd">
+                                                    <td tabindex="0">{{ forloop.counter }}</td>
+                                                    <td class="sorting_1">{{ medicine.medicine_name }}</td>
+                                                    <td>{{ medicine.generic_name }}</td>
+                                                    <td>{{ medicine.category.name }}</td>
+                                                    <td>{{ medicine.manufacturer }}</td>
+                                                    <td>{{ medicine.shelf }}</td>
+                                                    <td>{{ medicine.price_one |  floatformat:2 }}</td>
+                                                    <td>{{ medicine.manufacturer_price_one | floatformat:2 }}</td>
+                                                    <td> {{ medicine.strength }} {% if medicine.unit %} {{ medicine.unit.name }} {% endif %}</td>
+                                                    <td><img
+                                                            src="{% if medicine.image %} {{ medicine.image.url }} {% else %} {% endif %}"
+                                                            class="img img-responsive" height="50" width="50"></td>
+                                                    <td>
+                                                        <a href="{% url 'medicine:update-medicine' medicine.id %}"
+                                                           class="btn btn-success-soft btn-sm" data-toggle="tooltip"
+                                                            title="Update"><i class="fas fa-edit"
+                                                                                                   aria-hidden="true"></i></a>
+                                                        <a href="{% url 'medicine:bar-code' medicine.id %}"
+                                                           class="btn btn-warning-soft btn-sm" data-toggle="tooltip"
+                                                           title="Bar-code"><i
+                                                                class="fas fa-barcode" aria-hidden="true"></i></a>
+                                                        <a
+                                                            href="{% url 'medicine:bar-code' medicine.id %}"
+                                                            class="btn btn-success-soft btn-sm" data-toggle="tooltip"
+                                                            data-placement="left" title="QR-Code"><i
+                                                            class="fas fa-qrcode" aria-hidden="true"></i></a>
+
+                                                        <a
+                                                            onclick="return confirm('Are You Sure ?')"
+                                                            href="{% url 'medicine:remove-medicine' medicine.id %}"
+                                                            class="btn btn-danger-soft btn-sm" data-toggle="tooltip"
+                                                            data-placement="right" title="Delete "><i
+                                                            class="fa fa-trash" aria-hidden="true"></i></a></td>
+                                                </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </section>
+    </div>
+
+
+{% endblock content %}
+
+{% block scripts %}
+
+{% endblock scripts %}

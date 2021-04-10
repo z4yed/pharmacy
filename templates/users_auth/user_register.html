@@ -1,0 +1,164 @@
+{% extends  'base.html' %}
+{% load static %}
+{% block title %}
+    <title>Add User</title>
+{% endblock title %}
+
+
+{% block styles %}
+{% endblock styles %}
+
+{% block content %}
+
+    {% include 'sidebar.html' %}
+
+    <div class="content-wrapper" style="min-height: 201px;">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0 text-dark">Dashboard</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">Dashboard v1</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <span> {% include 'messages.html' %} </span>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <!-- Small boxes (Stat box) -->
+                <div class="body-content px-3 py-3">
+
+
+                    <div class="row">
+                        <div class="card col-md-12 col-lg-12">
+                            <div class="card-header py-2">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="fs-17 font-weight-600 mb-0">Add User</h6>
+                                    </div>
+                                    <div class="text-right">
+                                        <a href="{% url 'users_auth:users_list' %}"
+                                           class="btn btn-success btn-sm mr-1"><i class="fas fa-align-justify mr-1"></i>User
+                                            List</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <form action=""
+                                      enctype="multipart/form-data" method="post" accept-charset="utf-8"> {% csrf_token %}
+                                    <div class="form-group row">
+                                        <label for="firstname" class="col-sm-3 col-form-label">First Name <i
+                                                class="text-danger">*</i></label>
+                                        <div class="col-sm-9">
+                                            <input name="firstname" class="form-control" type="text"
+                                                   placeholder="firstname" id="firstname" value="" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="lastname" class="col-sm-3 col-form-label">Last Name <i
+                                                class="text-danger">*</i></label>
+                                        <div class="col-sm-9">
+                                            <input name="lastname" class="form-control" type="text"
+                                                   placeholder="lastname" id="lastname" value="" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="email" class="col-sm-3 col-form-label">Email <i class="text-danger">*</i></label>
+                                        <div class="col-sm-9">
+                                            <input name="email" class="form-control" type="email" placeholder="email"
+                                                   id="email" value="" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="password" class="col-sm-3 col-form-label">Password <i
+                                                class="text-danger">*</i></label>
+                                        <div class="col-sm-9">
+                                            <input name="password" class="form-control" type="password"
+                                                   placeholder="Password" id="password" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="about" class="col-sm-3 col-form-label">About</label>
+                                        <div class="col-sm-9">
+                                            <textarea name="about" placeholder="About" class="form-control"
+                                                      id="about"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="preview" class="col-sm-3 col-form-label">Preview</label>
+                                        <div class="col-sm-9">
+                                            <img src=""
+                                                 class="img-thumbnail" width="125" height="100">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="image" class="col-sm-3 col-form-label">Image</label>
+                                        <div class="col-sm-9">
+                                            <input type="file" name="image" id="image" aria-describedby="fileHelp">
+                                            <small id="fileHelp" class="text-muted"></small>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="status" class="col-sm-3 col-form-label">Is Admin <i
+                                                class="text-danger">*</i></label>
+                                        <div class="col-sm-9">
+                                            <label class="radio-inline">
+                                                <input type="radio" name="is_admin" value="1" checked="checked"
+                                                       id="is_admin">
+                                                Admin
+                                            </label>
+                                            <label class="radio-inline">
+                                                <input type="radio" name="is_admin" value="2" id="is_admin">
+                                                User
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="status" class="col-sm-3 col-form-label">Status <i
+                                                class="text-danger">*</i></label>
+                                        <div class="col-sm-9">
+                                            <label class="radio-inline">
+                                                <input type="radio" name="status" value="1" checked="checked"
+                                                       id="status">
+                                                Active
+                                            </label>
+                                            <label class="radio-inline">
+                                                <input type="radio" name="status" value="0" id="status">
+                                                Inactive
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group text-right">
+                                        <button type="reset" class="btn btn-primary w-md m-b-5">Reset</button>
+                                        <button type="submit"
+                                                class="btn btn-success w-md m-b-5">Save
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </section>
+    </div>
+
+{% endblock content %}
+
+{% block scripts %}
+
+{% endblock scripts %}

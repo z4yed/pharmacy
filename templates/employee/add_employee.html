@@ -1,0 +1,269 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    <title>Add Employee</title>
+{% endblock title %}
+
+
+{% block styles %}
+{% endblock styles %}
+
+
+
+{% block content %}
+
+    {% include 'sidebar.html' %}
+
+    <div class="content-wrapper" style="min-height: 201px;">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0 text-dark">Dashboard</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">Dashboard v1</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <span> {% include 'messages.html' %} </span>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <!-- Small boxes (Stat box) -->
+
+                <div class="body-content px-3 py-3">
+
+
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12">
+                            <div class="card">
+                                <div class="card-header py-2">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h6 class="fs-17 font-weight-600 mb-0">Add Employee</h6>
+                                        </div>
+                                        <div class="text-right">
+                                            <a href="{% url 'employee:employee_list' %}"
+                                               class="btn btn-success btn-sm mr-1"><i
+                                                    class="fas fa-align-justify mr-1"></i>Employee List</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <form action="{% url 'employee:add_employee' %}"
+                                          enctype="multipart/form-data" method="post" accept-charset="utf-8">
+
+                                        {% csrf_token %}
+
+                                        <div class="form-group row">
+                                            <label for="firstname" class="col-md-2 text-right col-form-label">First Name
+                                                <i class="text-danger"> * </i>:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <input type="text" name="firstname" class="form-control"
+                                                           id="firstname" placeholder="First Name" value="">
+                                                </div>
+                                            </div>
+                                            <label for="lastname" class="col-md-2 text-right col-form-label">Last Name
+                                                <i class="text-danger"> * </i>:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <input type="text" name="lastname" class="form-control"
+                                                           id="lastname" placeholder="Last Name" value="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="designation" class="col-md-2 text-right col-form-label">Designation
+                                                <i class="text-danger"> * </i>:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <select name="designation_id"
+                                                            class="form-control"
+                                                            data-select2-id="select2-data-1-pl0s" tabindex="-1"
+                                                            aria-hidden="true">
+                                                        <option value="default" selected="selected"
+                                                                data-select2-id="select2-data-3-x0go">Select Designation
+                                                        </option>
+                                                        {% for designation in designations %}
+
+                                                            <option value="{{ designation.id }}">{{ designation.name }}</option>
+
+                                                        {% endfor %}
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <label for="emp_phone" class="col-md-2 text-right col-form-label">Phone<i
+                                                    class="text-danger"> * </i>:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <input type="text" class="form-control valid_number" name="emp_phone"
+                                                           id="emp_phone" placeholder="Phone" value="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="rate_type" class="col-md-2 text-right col-form-label">Rate
+                                                Type<i class="text-danger"> * </i>:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <select class="form-control"
+                                                            name="rate_type" id="rate_type"
+                                                            data-select2-id="select2-data-rate_type" tabindex="-1"
+                                                            aria-hidden="true">
+                                                        <option value="default" data-select2-id="select2-data-5-pi47">Select
+                                                            Option
+                                                        </option>
+
+                                                        {% for rate_type in rate_types %}
+                                                            <option value="{{ rate_type.0 }}">{{ rate_type.1 }}</option>
+                                                        {% endfor %}
+
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <label for="hour_rate" class="col-md-2 text-right col-form-label">Hour
+                                                Rate/Salary <i class="text-danger"> * </i>:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <input type="text" class="form-control valid_number" name="hrate"
+                                                           id="hrate" placeholder="Hour Rate/Salary" value="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="email" class="col-md-2 text-right col-form-label">Email:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <input class="form-control" id="email" type="email" name="email"
+                                                           placeholder="Email" value="">
+                                                </div>
+                                            </div>
+                                            <label for="blood_group" class="col-md-2 text-right col-form-label">Blood
+                                                Group:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <input type="text" name="blood_group" class="form-control"
+                                                           id="blood_group" placeholder="Blood Group" value="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="address_line_1" class="col-md-2 text-right col-form-label">Address
+                                                Line 1<i class="text-danger"> </i>:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <textarea name="address_line_1" id="address_line_1"
+                                                              class="form-control"></textarea>
+                                                </div>
+                                            </div>
+                                            <label for="address_line_2" class="col-md-2 text-right col-form-label">Address
+                                                Line 2<i class="text-danger"> </i>:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <textarea name="address_line_2" id="address_line_2"
+                                                              class="form-control"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="country"
+                                                   class="col-md-2 text-right col-form-label">Country:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <input type="text" name="country" class="form-control" id="country"
+                                                           placeholder="Country" value="">
+                                                </div>
+                                            </div>
+                                            <label for="image" class="col-md-2 text-right col-form-label">Image:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <input name="image" type="file" class="form-control" id="image"
+                                                           placeholder="Image" value="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="city" class="col-md-2 text-right col-form-label">City:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <input type="text" name="city" class="form-control" id="country"
+                                                           placeholder="City" value="">
+                                                </div>
+                                            </div>
+                                            <label for="zip" class="col-md-2 text-right col-form-label">Zip:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <input name="zip" type="text" class="form-control" id="zip"
+                                                           placeholder="Zip" value="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="status" class="col-md-2 text-right col-form-label">Status <i
+                                                    class="text-danger"> * </i>:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <label class="radio-inline my-2">
+                                                        <input type="radio" name="status" value="1" checked="checked"
+                                                               id="status">
+                                                        Active
+                                                    </label>
+                                                    <label class="radio-inline my-2">
+                                                        <input type="radio" name="status" value="0" id="status">
+                                                        Inactive
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <label for="preview"
+                                                   class="col-md-2 text-right col-form-label">Preview:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <img id="blah" class="img-thambnail"
+                                                         src=""
+                                                         alt="your image" height="70px" width="70px;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-md-6 text-right">
+                                            </div>
+                                            <div class="col-md-6 text-right">
+                                                <div class="">
+                                                    <button type="submit" class="btn btn-success">
+                                                        Save
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- /.row (main row) -->
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
+
+{% endblock content %}
+
+
+{% block script %}
+{% endblock script %}

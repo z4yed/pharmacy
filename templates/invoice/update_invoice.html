@@ -1,0 +1,585 @@
+{% extends  'base.html' %}
+{% load static %}
+{% block title %}
+    <title>Update Invoice</title>
+{% endblock title %}
+
+
+{% block styles %}
+{% endblock styles %}
+
+{% block content %}
+
+    {% include 'sidebar.html' %}
+
+    <div class="content-wrapper" style="min-height: 201px;">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0 text-dark">Dashboard</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">Dashboard v1</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <span> {% include 'messages.html' %} </span>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <!-- Small boxes (Stat box) -->
+
+
+                <div class="body-content px-3 py-3">
+
+
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12">
+                            <div class="card">
+                                <div class="card-header py-2">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h6 class="fs-17 font-weight-600 mb-0">Update Invoice</h6>
+                                        </div>
+                                        <div class="text-right">
+                                            <a href="{% url 'invoice:invoice-list' %}"
+                                               class="btn btn-success btn-sm mr-1"><i
+                                                    class="fas fa-align-justify mr-1"></i>Invoice List</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <form action="{% url 'invoice:edit-invoice' object.id %}"
+                                          id="updateInvoice" enctype="multipart/form-data" method="post"
+                                          accept-charset="utf-8"> {% csrf_token %}
+                                        <div class="form-group row">
+                                            <label for="customer_name" class="col-md-2 text-right col-form-label">Customer
+                                                Name <i class="text-danger"> * </i>:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <select name="customer" id="customer" class="form-control">
+                                                        <option value="default">Select Customer</option>
+                                                        {% for customer in customers %}
+                                                            <option value="{{ customer.id }}" {% ifequal object.customer customer %} selected {% endifequal %}>{{ customer.name }}</option>
+                                                        {% endfor %}
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <label for="date" class="col-md-2 text-right col-form-label">Date <i
+                                                    class="text-danger"> * </i>:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <input type="text" name="date" class="form-control datepicker"
+                                                           id="date" placeholder="Date" value="{{ object.date }}" tabindex="2">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="invoice_no" class="col-md-2 text-right col-form-label">Invoice
+                                                No:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <input type="text" class="form-control" name="invoice_no"
+                                                           id="invoice_no" placeholder="Invoice No" value="{{ object.invoice_number }}"
+                                                           readonly="">
+                                                </div>
+                                            </div>
+                                            <label for="details"
+                                                   class="col-md-2 text-right col-form-label">Details:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <input type="text" class="form-control" name="details" id="details"
+                                                           placeholder="Details" value="{{ object.details }}" tabindex="3">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="payment_type" class="col-md-2 text-right col-form-label">Payment
+                                                Type:</label>
+                                            <div class="col-md-4">
+                                                <div class="">
+                                                    <select name="payment_type" id="payment_type"
+                                                            onchange=""
+                                                            class="form-control"
+                                                            tabindex="-1" data-select2-id="select2-data-payment_type"
+                                                            aria-hidden="true">
+
+                                                        {% for payment_type in payment_types %}
+                                                            <option value="{{ payment_type.0 }}" {% ifequal object.payment_types payment_type.0  %}
+                                                            selected {% endifequal %}>{{ payment_type.1 }}</option>
+                                                        {% endfor %}
+
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <label for="bank" class="col-md-2 text-right col-form-label d-none"
+                                                  id="bank_label">Bank:</label>
+                                            <div class="col-md-4 d-none" id="bank_div">
+                                                <div class="">
+                                                    <select name="bank_id"
+                                                            class="form-control"
+                                                            id="bank_id" data-select2-id="select2-data-bank_id"
+                                                            tabindex="-1" aria-hidden="true">
+                                                        <option value="default" selected="selected"
+                                                                >Select Bank
+                                                        </option>
+                                                        {% for bank_choice in bank_choices %}
+                                                            <option value="{{ bank_choice.0 }}" {% ifequal bank_choice.0 object.bank %}
+
+                                                            selected {% endifequal %}>{{ bank_choice.1 }}</option>
+                                                        {% endfor %}
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-hover table-responsive"
+                                                   id="normalinvoice">
+                                                <thead>
+                                                <tr>
+                                                    <th class="text-center" width="220">Medicine Information <i
+                                                            class="text-danger">*</i></th>
+                                                    <th class="text-center" width="130">Batch<i class="text-danger"></i>
+                                                    </th>
+                                                    <th class="text-center" width="100">Avail Qty</th>
+                                                    <th class="text-center" width="120">Expiry Date</th>
+                                                    <th class="text-center" width="100">Unit</th>
+                                                    <th class="text-center" width="100">Quantity <i
+                                                            class="text-danger">*</i></th>
+                                                    <th class="text-center" width="150">Price <i
+                                                            class="text-danger">*</i></th>
+                                                    <th class="text-center">Discount %</th>
+                                                    <th class="text-center" width="150">Total</th>
+                                                    <th class="text-center">Action</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody id="addInvoiceItem">
+                                                {% for item in invoice_items %}
+                                                    <tr id="row_{{ forloop.counter }}">
+                                                    <input id="item_id_{{ forloop.counter }}" type="hidden" name="items[]" value="{{ item.id }}"></input>
+                                                        <td id="product_field_1">
+                                                            <select name="medicine_id[]" id="selected_medicine_{{ forloop.counter }}"  data-row="{{ forloop.counter }}" class="form-control all_medicines">
+                                                                <option value="default">Select Medicine</option>
+                                                                {% for medicine in medicines %}
+                                                                    <option value="{{ medicine.id }}" {% ifequal item.batch.medicine medicine %} selected {% endifequal %}
+                                                                    >{{ medicine.medicine_name }}({{ medicine.strength }})</option>
+                                                                {% endfor %}
+
+                                                            </select>
+                                                        </td>
+                                                        <td>
+                                                            <select class="form-control select2 batches" data-row="{{ forloop.counter }}"
+                                                                    id="batch_id_{{ forloop.counter }}" name="batch_id[]"
+                                                                    tabindex="-1"
+                                                                    aria-hidden="true">
+                                                                <option>Select Batch</option>
+                                                            </select>
+                                                            <input type="hidden" id="batch_value_{{ forloop.counter }}" value="{{ item.batch.id }}">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" name="available_quantity[]"
+                                                                   class="form-control text-right available_quantity_1"
+                                                                   value="{{ item.batch.current_stock }}" readonly="" id="available_quantity_{{ forloop.counter }}">
+                                                        </td>
+                                                        <td>
+                                                            <p id="expire_date_{{ forloop.counter }}" style="color: red">{{ item.batch.expiry_date }}</p>
+                                                        </td>
+                                                        <td>
+                                                            <input name="" id="unit_{{ forloop.counter }}"
+                                                                   class="form-control text-right unit_1 valid" value="{{ item.batch.medicine.unit.name }}"
+                                                                   readonly="" aria-invalid="false" type="text">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" name="product_quantity[]"
+                                                                   onkeyup="calculate_total(this.id)" value="{{ item.sell_quantity }}"
+                                                                   class="total_qntt_1 total_quantity form-control text-right valid_number"
+                                                                   id="total_qntt_{{ forloop.counter }}" placeholder="0.00" min="0" tabindex="7"
+                                                                   required="">
+                                                            <input type="hidden" id="sold_quantity_{{ forloop.counter }}" value="{{ item.sell_quantity }}">
+                                                        </td>
+
+                                                        <td class="invoice_fields">
+                                                            <input type="text" name="product_rate[]" id="price_item_{{ forloop.counter }}"
+                                                                   class="price_item1 price_item form-control text-right valid_number"
+                                                                   tabindex="8" required="" value="{{ item.price }}"
+                                                                   onkeyup="calculate_total(this.id)"
+                                                                   placeholder="0.00" min="0">
+                                                        </td>
+
+                                                        <td>
+                                                            <input type="text" name="discount[]"
+                                                                   onkeyup="calculate_total(this.id)"
+                                                                   id="discount_{{ forloop.counter }}" value="{{ item.discount }}"
+                                                                   class="form-control text-right line_discount valid_number" min="0"
+                                                                   tabindex="9" placeholder="0.00">
+
+                                                        </td>
+                                                        <td class="invoice_fields">
+                                                            <input class="total_price form-control text-right" type="text"
+                                                                   name="total_price[]" id="total_price_{{ forloop.counter }}" value="{{ item.total_bill_exclude_vat }}"
+                                                                   readonly="readonly">
+                                                        </td>
+                                                        <td>
+
+                                                            <button type="button" class="btn btn-danger btn-sm" id="{{ forloop.counter }}"
+                                                                    tabindex="10"
+                                                                    onclick="remove_rows('invoice',  this.id)">
+                                                                <i class="far fa-trash-alt"></i></button>
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+
+                                                </tbody>
+                                                <tfoot>
+                                                <tr>
+                                                    <td colspan="7" rowspan="2">
+                                                    </td>
+                                                    <td class="text-right" colspan="1"><b>Invoice Discount:</b></td>
+                                                    <td class="text-right">
+                                                        <input type="text" id="invdcount"
+                                                               class="form-control text-right valid_number"
+                                                               name="invoice_discount"
+                                                               onkeyup="calculate_total_discount()"
+                                                               onchange="" value="{{ object.invoice_discount }}"
+                                                               tabindex="12">
+                                                    </td>
+                                                    <td>
+                                                        <button class="btn btn-info btn-sm" type="button"
+                                                                onclick="increase_row('invoice')"
+                                                                tabindex="11" id="add_invoice_item"><i
+                                                                class="fa fa-plus"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="1" class="text-right"><b>Total Discount:</b></td>
+                                                    <td class="text-right">
+                                                        <input type="text" id="total_discount_amount"
+                                                               class="form-control text-right valid_number"
+                                                               name="total_discount" value="{{ object.total_discount }}" readonly="readonly">
+                                                    </td>
+                                                </tr>
+                                                <tr class="hideableRow hiddenRow collapse" id="collapseExample">
+                                                    <td class="text-right" colspan="8"><b>Vat </b></td>
+                                                    <td class="text-right">
+                                                        <input id="total_tax_amount0" tabindex="-1"
+                                                               class="form-control text-right valid totalTax valid_number"
+                                                               name="total_tax0" value="0.00" readonly="readonly"
+                                                               aria-invalid="false" type="text">
+                                                    </td>
+                                                </tr>
+                                                <tr class="hideableRow hiddenRow collapse" id="collapseExample">
+                                                    <td class="text-right" colspan="8"><b>IGTA </b></td>
+                                                    <td class="text-right">
+                                                        <input id="total_tax_amount1" tabindex="-1"
+                                                               class="form-control text-right valid totalTax valid_number"
+                                                               name="total_tax1" value="0.00" readonly="readonly"
+                                                               aria-invalid="false" type="text">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-right" colspan="8"><b>Total VAT:</b></td>
+                                                    <td class="text-right">
+                                                        <input id="total_tax_amount" tabindex="-1"
+                                                               class="form-control text-right valid valid_number"
+                                                               name="total_tax" value="0.00" readonly="readonly"
+                                                               aria-invalid="false" type="text">
+                                                    </td>
+                                                    <td><a class="btn btn-warning taxbutton text-center"
+                                                           data-toggle="collapse" data-target="#collapseExample"
+                                                           aria-expanded="false" aria-controls="collapseExample"><i
+                                                            class="fa fa-angle-double-up"></i></a></td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="8" class="text-right"><b>Grand Total:</b></td>
+                                                    <td class="text-right">
+                                                        <input type="text" id="grandTotal"
+                                                               class="form-control text-right" name="grand_total_price"
+                                                               value="{{ object.grand_total }}" readonly="readonly">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="8" class="text-right"><b>Previous:</b></td>
+                                                    <td class="text-right">
+                                                        <input type="text" id="previous"
+                                                               class="form-control text-right valid_number"
+                                                               name="previous" value="{{ object.customer.previous_balance }}" readonly="readonly">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="8" class="text-right"><b>Net Total:</b></td>
+                                                    <td class="text-right">
+                                                        <input type="text" id="n_total" class="form-control text-right"
+                                                               name="n_total" value="{{ object.net_total }}" readonly="readonly"
+                                                               placeholder="">
+                                                        <input type="hidden" id="txfieldnum" value="2">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-right" colspan="8"><b>Paid Amount:</b></td>
+                                                    <td class="text-right">
+                                                        <input type="text" id="paidAmount" value="{{ object.paid_amount }}"
+                                                               onkeyup="calculate_due_total()"
+                                                               class="form-control text-right valid_number"
+                                                               name="paid_amount" placeholder="0.00" tabindex="13">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="center">
+                                                        <input type="button" id="full_paid_invoice_tab"
+                                                               class="btn btn-warning" value="Full Paid" tabindex="14"
+                                                               onclick="full_paid_invoice()">
+                                                        <input type="submit" id="add_invoice" class="btn btn-success"
+                                                               name="add-invoice" value="Save" tabindex="15">
+                                                    </td>
+                                                    <td class="text-right" colspan="7"><b>Due Amount:</b></td>
+                                                    <td class="text-right">
+                                                        <input type="text" id="dueAmount"
+                                                               class="form-control text-right" name="due_amount"
+                                                               value="{{ object.due_amount }}" readonly="readonly">
+                                                    </td>
+                                                </tr>
+                                                <tr id="change_m">
+                                                    <td class="text-right" colspan="8" id="ch_l"><b>Change:</b></td>
+                                                    <td class="text-right">
+                                                        <input type="text" id="change" class="form-control text-right"
+                                                               name="change" value="{{ object.change }}" readonly="readonly">
+                                                    </td>
+                                                </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+    </div>
+
+    {% include 'invoice/modals/print_modal.html' %}
+
+    <script>
+        let action = 'update'
+        let current_rows = '{{ object.invoice_items.count }}'
+    </script>
+
+    <script src="{% static 'js/add_remove_rows.js' %}"></script>
+
+{% endblock content %}
+
+{% block scripts %}
+
+    <script>
+
+        let all_medicines = undefined
+
+        $(document).ready(function (){
+            check_payment();
+            fetch_batches();
+            $("#payment_type").on('change', function (){
+                check_payment();
+            });
+
+            all_medicines = $("#row_1 select").html()
+        })
+
+    </script>
+
+    <script>
+        function check_payment(){
+            let payment_type = $("#payment_type").val();
+            if (payment_type  == 1){
+                $("#bank_div").addClass('d-none');
+                $("#bank_label").addClass('d-none');
+            }
+            else{
+                $("#bank_div").removeClass('d-none');
+                $("#bank_label").removeClass('d-none');
+            }
+        }
+    </script>
+
+    <script>
+        function check_expiry_date(id){
+
+            let row_id = parseInt(id.replace(/[^0-9.]/g, "")) // extracting number from string.
+            alert(id)
+
+        }
+
+    </script>
+
+    <script>
+        $(document).on('change', '.all_medicines', function (){
+
+            let row_number = $(this).attr('data-row')
+            let medicine_id = $(this).val()
+
+            let data = {
+                medicine_id: medicine_id,
+            }
+            $.ajax({
+                url: '{% url 'invoice:fetch-med-info' %}',
+                data: data,
+                method: 'get',
+                success: function (data){
+                    let option = '<option class="select2">Select Batch</option>'
+                    let keys = []
+                    let values = []
+
+                    $.each(data.batches, function (key, value){
+                        keys.push(key)
+                        values.push(value)
+                    })
+
+                    for (const i in values){
+                        option += '<option value=" ' + keys[i] + ' "> ' +values[i]+ ' </option>'
+                    }
+
+                    $("#batch_id_"+row_number).html(option)  // Batch Options
+                    $("#available_quantity_"+row_number).val(data.total_stock)
+                    $("#unit_"+row_number).val(data.unit)
+                    $("#price_item_"+row_number).val(data.price_of_one)
+
+                },
+                error: function (error){
+                    console.log(error)
+                    $("#available_quantity_"+row_number).val('')
+                    $("#unit_"+row_number).val('')
+                    $("#price_item_"+row_number).val('0.00')
+                },
+            })
+
+
+
+
+        });
+    </script>
+
+    <script>
+         $(document).on('change', '.batches', function (){
+             let batch_id = $(this).val()
+             let row_number = $(this).attr('data-row')
+
+             let data = {
+                 batch_id: batch_id
+             }
+             $.ajax({
+                 url: '{% url 'invoice:fetch-batch' %}',
+                 data: data,
+                 method: 'get',
+                 success: function (data){
+                     $("#expire_date_"+row_number).text(data.expiry_date);
+                     $("#available_quantity_"+row_number).val(data.batch_stock);
+                 },
+                 error: function (error){
+                   console.log(error)
+                     $("#expire_date_"+row_number).text('')
+                     $("#available_quantity_"+row_number).val('');
+                 },
+             })
+
+        });
+    </script>
+
+
+    <script>
+        $("#customer").on('change', function (){
+
+            let customer_id = $("#customer").val()
+            let data = {
+                'customer_id': customer_id,
+            }
+
+            $.ajax({
+
+                url: '{% url 'invoice:fetch-customer' %}',
+                data: data,
+                method: 'get',
+                success: function( data ){
+                    $("#previous").val(parseFloat(data.balance).toFixed(2))
+                     calculate_net_total();  // Comment this line if you don't want to autocalculate net total
+                },
+                error: function (error){
+                    console.log("ERROR")
+                    $("#previous").val('0.0')
+                },
+
+            });
+
+
+        });
+    </script>
+
+
+    <script>
+    function fetch_batches(){
+
+        $(".all_medicines").each(function (){
+            let row_id = this.id
+            row_id = parseInt(row_id.replace(/[^0-9.]/g, "")) // extracting number from string.
+
+            let medicine_id = $("#selected_medicine_"+row_id).val()
+            let data = {
+                medicine_id: medicine_id
+            }
+
+            let option = '<option class="select2">Select Batch</option>'
+            $.ajax({
+                url: '{% url 'invoice:fetch-batch-list' %}',
+                data: data,
+                method: 'get',
+                success: function (data){
+                    for (let i in data ){
+                        let id = data[i]['id']
+                        let batch_number = data[i]['batch_number']
+                        option += '<option value="' + id + '"> ' +batch_number+ ' </option>'
+                    }
+
+                    $("#batch_id_"+row_id).html(option)
+                    let previously_selected = $("#batch_value_"+row_id).val() // From hidden field
+                    $("#batch_id_"+row_id).val(previously_selected)
+
+                     for (let i in data ) {
+                         let id = data[i]['id']
+                         if (id == previously_selected){
+                             $("#available_quantity_"+row_id).val(data[i]['available'])
+                             break;
+                         }
+                     }
+
+                },
+                error: function (error){
+                    console.log(error);
+                },
+            })
+
+
+
+        })
+
+    }
+    </script>
+
+
+{% endblock scripts %}
+

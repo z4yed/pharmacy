@@ -1,0 +1,84 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    {% block title %}
+
+    {% endblock title %}
+
+
+    <!-- Link to css files -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jquery-ui.min.css' %}">
+
+    <!-- Admin LTE -->
+
+    <link rel="stylesheet" href="{% static 'css/admin/all.css' %}">
+    <link rel="stylesheet" href="{% static 'css/admin/ionicons.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/admin/tempusdominus-bootstrap-4.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/admin/icheck-bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/admin/jqvmap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/admin/adminlte.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/admin/summernote-bs4.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/admin/daterangepicker.css' %}">
+    <link rel="stylesheet" href="{% static 'css/admin/OverlayScrollbars.min.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.23/b-1.6.5/b-html5-1.6.5/b-print-1.6.5/datatables.min.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+    {% block styles %}
+
+    {% endblock styles %}
+
+</head>
+<body>
+    {% block content %}
+
+    {% endblock content %}
+
+
+    <!-- Link to scrips -->
+    <script src="{% static 'js/jquery-3.5.1.min.js' %}"></script>
+    <script src="{% static 'js/jquery.validate.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jquery-ui.min.js' %}"></script>
+    <script src="{% static 'js/custom.js' %}"></script>
+
+    <!-- Datatable CDN Start -->
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.23/b-1.6.5/b-html5-1.6.5/b-print-1.6.5/datatables.min.js"></script>
+    <script src="https://cdn.datatables.net/plug-ins/1.10.19/api/sum().js"></script>
+    <!-- Datatable CDN End -->
+
+    <!-- Admin LTE scripts -->
+
+    <script src="{% static 'js/admin/bootstrap.bundle.min.js' %}"> </script>
+    <script src="{% static 'js/admin/Chart.min.js' %}"> </script>
+    <script src="{% static 'js/admin/sparkline.js' %}"> </script>
+    <script src="{% static 'js/admin/jquery.knob.min.js' %}"> </script>
+    <script src="{% static 'js/admin/moment.min.js' %}"> </script>
+    <script src="{% static 'js/admin/daterangepicker.js' %}"> </script>
+    <script src="{% static 'js/admin/daterangepicker.js' %}"> </script>
+    <script src="{% static 'js/admin/tempusdominus-bootstrap-4.min.js' %}"> </script>
+    <script src="{% static 'js/admin/summernote-bs4.min.js' %}"> </script>
+    <script src="{% static 'js/admin/jquery.overlayScrollbars.min.js' %}"> </script>
+    <script src="{% static 'js/admin/adminlte.min.js' %}"> </script>
+    <script src="{% static 'js/admin/dashboard.js' %}"> </script>
+    <script src="{% static 'js/admin/demo.js' %}"> </script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script src="{% static 'js/validate_form.js' %}"></script>
+
+    {% block scripts %}
+
+    {% endblock scripts %}
+
+</body>
+</html>

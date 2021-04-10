@@ -1,0 +1,172 @@
+{% extends  'base.html' %}
+{% load static %}
+{% block title %}
+    <title>Users List</title>
+{% endblock title %}
+
+
+{% block styles %}
+{% endblock styles %}
+
+{% block content %}
+
+    {% include 'sidebar.html' %}
+
+    <div class="content-wrapper" style="min-height: 201px;">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0 text-dark">Dashboard</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">Dashboard v1</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <span> {% include 'messages.html' %} </span>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <!-- Small boxes (Stat box) -->
+
+                <div class="body-content px-3 py-3">
+
+
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12">
+                            <div class="card ">
+                                <div class="card-header py-2">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h6 class="fs-17 font-weight-600 mb-0">User List</h6>
+                                        </div>
+                                        <div class="text-right">
+                                            <a href="{% url 'users_auth:registration' %}"
+                                               class="btn btn-success btn-sm mr-1"><i class="fas fa-plus mr-1"></i>Add
+                                                User</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="">
+                                        <div id="example_wrapper" class="no-footer">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <table class="table table-bordered table-hover custom-table no-footer"
+                                                           id="users_list" role="grid" aria-describedby="example_info">
+                                                        <thead>
+                                                        <tr role="row">
+                                                            <th class="sorting_asc" tabindex="0" aria-controls="example"
+                                                                rowspan="1" colspan="1" aria-sort="ascending"
+                                                                aria-label="Sl: activate to sort column descending"
+                                                                style="width: 20px;">Sl
+                                                            </th>
+                                                            <th class="sorting" tabindex="0" aria-controls="example"
+                                                                rowspan="1" colspan="1"
+                                                                aria-label="Image: activate to sort column ascending"
+                                                                style="width: 52px;">Image
+                                                            </th>
+                                                            <th class="sorting" tabindex="0" aria-controls="example"
+                                                                rowspan="1" colspan="1"
+                                                                aria-label="User Name: activate to sort column ascending"
+                                                                style="width: 86px;">User Name
+                                                            </th>
+                                                            <th class="sorting" tabindex="0" aria-controls="example"
+                                                                rowspan="1" colspan="1"
+                                                                aria-label="Email: activate to sort column ascending"
+                                                                style="width: 125px;">Email
+                                                            </th>
+                                                            <th class="sorting" tabindex="0" aria-controls="example"
+                                                                rowspan="1" colspan="1"
+                                                                aria-label="About: activate to sort column ascending"
+                                                                style="width: 52px;">About
+                                                            </th>
+                                                            <th class="sorting" tabindex="0" aria-controls="example"
+                                                                rowspan="1" colspan="1"
+                                                                aria-label="Last Login: activate to sort column ascending"
+                                                                style="width: 131px;">Last Login
+                                                            </th>
+                                                            <th class="sorting" tabindex="0" aria-controls="example"
+                                                                rowspan="1" colspan="1"
+                                                                aria-label="Last Logout: activate to sort column ascending"
+                                                                style="width: 132px;">Last Logout
+                                                            </th>
+                                                            <th class="sorting" tabindex="0" aria-controls="example"
+                                                                rowspan="1" colspan="1"
+                                                                aria-label="Ip Address: activate to sort column ascending"
+                                                                style="width: 90px;">Ip Address
+                                                            </th>
+                                                            <th width="70px;" class="sorting" tabindex="0"
+                                                                aria-controls="example" rowspan="1" colspan="1"
+                                                                aria-label="Action: activate to sort column ascending"
+                                                                style="width: 70px;">Action
+                                                            </th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+
+                                                        {% for profile in profiles %}
+
+                                                            <tr role="row" class="odd">
+                                                                <td class="sorting_1">{{ forloop.counter }}</td>
+                                                                <td>
+                                                                    <img
+                                                                        src="{{ profile.image_url }}"
+                                                                        height="80px" width="70px">
+                                                                </td>
+                                                                <td>{{ profile.user.get_full_name }}</td>
+                                                                <td>{{ profile.user.email }}</td>
+                                                                <td>{{ profile.details }}</td>
+                                                                <td>{{ profile.user.last_login }}</td>
+                                                                <td>{{ profile.last_logout }}</td>
+                                                                <td>{{ profile.ip_address }}</td>
+                                                                <td>
+                                                                    <a href="{% url 'users_auth:update_user' profile.id %}"
+                                                                       class="btn btn-info btn-sm"
+                                                                       data-toggle="tooltip" data-placement="left"
+                                                                       title="Update"><i class="far fa-edit"
+                                                                                         aria-hidden="true"></i></a>
+                                                                    <a onclick="return confirm('Are You Sure ?')"
+                                                                       href="{% url 'users_auth:remove_user' profile.id %}"
+                                                                       class="btn btn-danger btn-sm"
+                                                                       data-toggle="tooltip" data-placement="right"
+                                                                       title="Delete "><i class="far fa-trash-alt"
+                                                                                          aria-hidden="true"></i></a>
+
+                                                                </td>
+                                                            </tr>
+
+                                                        {% endfor %}
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+    </div>
+
+{% endblock content %}
+
+{% block scripts %}
+
+{% endblock scripts %}

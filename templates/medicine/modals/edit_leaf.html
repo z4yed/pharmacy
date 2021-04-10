@@ -1,0 +1,41 @@
+{% load static %}
+
+<!-- Modal -->
+<div class="modal fade" id="update_leaf{{ leaf.id }}" role="dialog">
+<form action="{% url 'medicine:update-leaf' leaf.id %}" method="post" id="update_leaf_form"> {% csrf_token %}
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h4 class="modal-title">Update Setting</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <div class="modal-body">
+            <div class="row my-3">
+                <div class="col-md-12">
+                    <label for="leaf_type" class="form-control-label">Leaf Type</label>
+                    <input type="text" name="leaf_type" id="leaf_type" value="{{ leaf.leaf_type }}" class="form-control">
+                </div>
+            </div>
+
+            <div class="row my-3">
+                <div class="col-md-12">
+                    <label for="total_box" class="form-control-label">Total Number of Box</label>
+                    <input type="text" name="total_box" id="total_box" value="{{ leaf.number_per_box }}" class="numberField form-control">
+                </div>
+            </div>
+
+            </div>
+            <div class="modal-footer">
+                <input type="submit" value="Update" class="btn btn-success">
+              <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+            </div>
+      </div>
+    </div>
+
+     </form>
+
+</div>

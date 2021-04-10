@@ -1,0 +1,153 @@
+{% extends  'base.html' %}
+{% load static %}
+{% block title %}
+    <title>Stock Report (Batch Wise)</title>
+{% endblock title %}
+
+
+{% block styles %}
+{% endblock styles %}
+
+{% block content %}
+
+    {% include 'sidebar.html' %}
+
+    <div class="content-wrapper" style="min-height: 201px;">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0 text-dark">Dashboard</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">Dashboard v1</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <span> {% include 'messages.html' %} </span>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <!-- Small boxes (Stat box) -->
+
+                <div class="body-content px-3 py-3">
+
+
+                    <div class="row">
+                        <div class="col-md-12 col-md-12">
+                            <div class="card ">
+                                <div class="card-header py-2">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h6 class="fs-17 font-weight-600 mb-0">Stock Report(Batch Wise)</h6>
+                                        </div>
+                                        <div class="text-right">
+                                            <a href="https://pharmacyv5.bdtask.com/pharmacare-9.4_demo/stock/stock_list"
+                                               class="btn btn-success btn-sm mr-1"><i
+                                                    class="fas fa-align-justify mr-1"></i>Stock Report</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <div id="StockListBatchwise_wrapper"
+                                             class="dataTables_wrapper dt-bootstrap4 no-footer">
+
+                                            <table class="table lan table-bordered table-striped table-hover custom-table dataTable no-footer dtr-inline"
+                                                   width="100%" id="StockListBatchwise" role="grid"
+                                                   aria-describedby="StockListBatchwise_info" style="width: 100%;">
+                                                <thead>
+                                                <tr role="row">
+                                                    <th class="text-center sorting_disabled" rowspan="1" colspan="1"
+                                                        style="width: 32px;" aria-label="Sl">Sl
+                                                    </th>
+                                                    <th class="text-center sorting_asc" tabindex="0"
+                                                        aria-controls="StockListBatchwise" rowspan="1" colspan="1"
+                                                        style="width: 157px;" aria-sort="ascending"
+                                                        aria-label="Medicine Name: activate to sort column descending">
+                                                        Medicine Name
+                                                    </th>
+                                                    <th class="text-center sorting_disabled" rowspan="1" colspan="1"
+                                                        style="width: 94px;" aria-label="Strength">Strength
+                                                    </th>
+                                                    <th class="text-center sorting_disabled" rowspan="1" colspan="1"
+                                                        style="width: 90px;" aria-label="Batch Id">Batch Id
+                                                    </th>
+                                                    <th class="text-center sorting_disabled" rowspan="1" colspan="1"
+                                                        style="width: 120px;" aria-label="Expiry Date">Expiry Date
+                                                    </th>
+                                                    <th class="text-center text-right sorting_disabled" rowspan="1"
+                                                        colspan="1" style="width: 70px;" aria-label="In Qty">In Qty
+                                                    </th>
+                                                    <th class="text-center text-right sorting_disabled" rowspan="1"
+                                                        colspan="1" style="width: 87px;" aria-label="Out Qty">Out Qty
+                                                    </th>
+                                                    <th class="text-center text-right sorting" tabindex="0"
+                                                        aria-controls="StockListBatchwise" rowspan="1" colspan="1"
+                                                        style="width: 71px;"
+                                                        aria-label="Stock: activate to sort column ascending">Stock
+                                                    </th>
+
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                {% for batch in batches %}
+
+                                                    <tr role="row">
+                                                        <td tabindex="0">{{ forloop.counter }}</td>
+                                                        <td class="sorting_1">{{ batch.medicine.medicine_name }}</td>
+                                                        <td>{{ batch.medicine.strength }}</td>
+                                                        <td>{{ batch.batch_number }}</td>
+                                                        <td>{{ batch.expiry_date }}</td>
+                                                        <td class=" text-right">{{ batch.batch_stock }}</td>
+                                                        <td class=" text-right">{{ batch.sold_quantity }}</td>
+                                                        <td class=" text-right">{{ batch.current_stock }}</td>
+                                                    </tr>
+
+                                               {% endfor %}
+
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+    </div>
+
+
+{% endblock content %}
+
+{% block scripts %}
+    <script>
+        $(document).ready(function () {
+
+            $('#StockListBatchwise').DataTable({
+
+            });
+
+        });
+    </script>
+
+{% endblock scripts %}
+
+
+
+
+

@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    <title>Bank List</title>
+{% endblock title %}
+
+
+{% block styles %}
+{% endblock styles %}
+
+
+
+{% block content %}
+
+    {% include 'sidebar.html' %}
+
+    <div class="content-wrapper" style="min-height: 201px;">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0 text-dark">Dashboard</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">Dashboard v1</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <span> {% include 'messages.html' %} </span>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <!-- Small boxes (Stat box) -->
+
+
+                <div class="body-content px-3 py-3">
+
+
+                    <div class="row">
+                        <div class="col-md-12 col-md-12">
+                            <div class="card ">
+                                <div class="card-header py-2">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h6 class="fs-17 font-weight-600 mb-0">Bank List</h6>
+                                        </div>
+                                        <div class="text-right">
+                                            <a href="{% url 'bank:add-bank' %}"
+                                               class="btn btn-success btn-sm mr-1"><i class="fas fa-plus mr-1"></i>Add
+                                                Bank</a>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <div id="BankList_wrapper" class="dataTables_wrapper dt-bootstrap4">
+
+                                            <table class="table display table-bordered table-striped table-hover custom-table dataTable dtr-inline"
+                                                   width="100%" id="BankList" role="grid"
+                                                   aria-describedby="BankList_info" style="width: 100%;">
+                                                <thead>
+                                                <tr role="row">
+                                                    <th class="sorting_disabled" rowspan="1" colspan="1"
+                                                        style="width: 25px;" aria-label="Sl">Sl
+                                                    </th>
+                                                    <th width="200px;" class="sorting_asc" tabindex="0"
+                                                        aria-controls="BankList" rowspan="1" colspan="1"
+                                                        style="width: 200px;" aria-sort="ascending">Bank
+                                                        Name
+                                                    </th>
+                                                    <th class="sorting_disabled" rowspan="1" colspan="1"
+                                                        style="width: 128px;" aria-label="Account Name">Account Name
+                                                    </th>
+                                                    <th class="sorting_disabled" rowspan="1" colspan="1"
+                                                        style="width: 146px;" aria-label="Account Number">Account Number
+                                                    </th>
+                                                    <th class="sorting_disabled" rowspan="1" colspan="1"
+                                                        style="width: 80px;" aria-label="Branch">Branch
+                                                    </th>
+                                                    <th class="sorting_disabled" rowspan="1" colspan="1"
+                                                        style="width: 149px;" aria-label="Signature Picture">Signature
+                                                        Picture
+                                                    </th>
+                                                    <th class="balance text-right sorting_disabled" rowspan="1"
+                                                        colspan="1" style="width: 121px;" aria-label="Balance">Balance (BDT)
+                                                    </th>
+                                                    <th width="30px;" class="sorting_disabled" rowspan="1" colspan="1"
+                                                        style="width: 43px;" aria-label="Action">Action
+                                                    </th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                {% for bank in banks %}
+                                                    <tr role="row">
+                                                        <td>{{ forloop.counter }}</td>
+                                                        <td>{{ bank.name }}</td>
+                                                        <td>{{ bank.account_name }}</td>
+                                                        <td>{{ bank.account_number }}</td>
+                                                        <td>{{ bank.branch }}</td>
+                                                        <td><img
+                                                                src="{{ bank.image_url }}" alt="Not Attached"
+                                                                class="img img-responsive" height="50" width="50"></td>
+                                                        <td class=" balance text-right">{{ bank.balance }}</td>
+                                                        <td>
+                                                            <a href="{% url 'bank:update-bank' bank.id %}"
+                                                               class="btn btn-success-soft btn-sm" data-toggle="tooltip"
+                                                               data-placement="left" title="Update"><i class="fas fa-edit"
+                                                                                                       aria-hidden="true"></i></a>
+                                                            <a onclick="return confirm('Are You Sure ?')"
+                                                               href="{% url 'bank:remove-bank' bank.id %}"
+                                                               class="btn btn-danger-soft btn-sm" data-toggle="tooltip"
+                                                               data-placement="right" title="Delete "><i
+                                                                    class="far fa-trash-alt" aria-hidden="true"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+
+                                                </tbody>
+                                                <tfoot>
+                                                <tr>
+                                                    <th colspan="6" class="text-right" rowspan="1">Total:</th>
+                                                    <th class="text-right balance" rowspan="1" colspan="1">$
+                                                        0
+                                                    </th>
+                                                    <th rowspan="1" colspan="1"></th>
+                                                </tr>
+                                                </tfoot>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <!-- /.row (main row) -->
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
+
+{% endblock content %}
+
+
+{% block script %}
+{% endblock script %}

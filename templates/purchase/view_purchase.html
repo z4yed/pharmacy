@@ -1,0 +1,226 @@
+{% extends  'base.html' %}
+{% load static %}
+{% block title %}
+    <title>Purchase Details</title>
+{% endblock title %}
+
+
+{% block styles %}
+{% endblock styles %}
+
+{% block content %}
+
+    {% include 'sidebar.html' %}
+
+    <div class="content-wrapper" style="min-height: 201px;">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0 text-dark">Dashboard</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">Dashboard v1</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <span> {% include 'messages.html' %} </span>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <!-- Small boxes (Stat box) -->
+
+
+                <div class="body-content px-3 py-3">
+
+
+                    <div class="row justify-content-center">
+                        <div class="col-12 col-lg-10 col-xl-8">
+                            <div class="header p-0 ml-0 mr-0 shadow-none">
+                                <div class="header-body">
+                                    <div class="row align-items-center">
+                                        <div class="col">
+                                            <h6 class="header-pretitle fs-10 font-weight-bold text-muted text-uppercase mb-1">
+                                                Payments</h6>
+                                            <h2 class="header-title fs-25 font-weight-600">Invoice No: {{ object.invoice }}</h2>
+                                        </div>
+                                        <div class="col-auto">
+                                            <a href="{% url 'purchase:purchase-list' %}"
+                                               class="btn btn-success ml-2"><i
+                                                    class="fas fa-align-justify mr-1"></i>Purchase List</a>
+                                            <a onclick=""
+                                               class="btn btn-success ml-2"><i class="mr-1"></i>Print
+                                                Invoice </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card card-body p-5">
+                                <div class="" id="printArea">
+                                    <div class="row">
+                                        <div class="col text-center">
+                                            <img src=""
+                                                 alt="..." class="img-fluid mb-4" height="100px" width="250px;">
+                                            <h4 class="mb-0 font-weight-bold">{{ company.company_title }}</h4>
+                                            <p class="text-muted mb-5">Invoice: {{ object.invoice }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 col-md-6">
+                                            <h4 class="text-uppercase text-success  font-weight-600">Billing From</h4>
+                                            <p class="text-muted mb-4">
+                                                <strong class="text-body fs-16">{{ object.manufacturer.name }}</strong>
+                                                <br>
+                                                {{ object.manufacturer.first_address }} <br>
+                                                {{ object.manufacturer.first_email }} <br>
+                                                P: {{ object.manufacturer.mobile_number }} </p>
+                                            <h6 class="text-uppercase text-muted fs-12 font-weight-600">Purchase Id</h6>
+                                            <p class="mb-4">{{ object.purchase_id }}</p>
+                                        </div>
+                                        <div class="col-12 col-md-6 text-md-right">
+                                            <h4 class="text-uppercase text-success font-weight-600">Billing To</h4>
+                                            <p class="text-muted mb-4">
+                                                <strong class="text-body fs-16">{{ company.company_title }}</strong> <br>
+                                                {{ company.address}} <br>
+                                                {{ company.email }} <br>
+                                                P: {{ company.phone }} </p>
+                                            <h6 class="text-uppercase text-muted fs-12 font-weight-600"> Date</h6>
+                                            <p class="mb-4">
+                                                <time datetime=""> {{ object.date }}</time>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="table-responsive">
+                                                <table class="table my-4">
+                                                    <thead>
+                                                    <tr>
+                                                        <th class="px-0 bg-transparent border-top-0">
+                                                            <span class="h6 font-weight-bold">Sl</span>
+                                                        </th>
+                                                        <th class="px-0 bg-transparent border-top-0">
+                                                            <span class="h6 font-weight-bold">Medicine <br> Name</span>
+                                                        </th>
+                                                        <th class="px-0 bg-transparent border-top-0">
+                                                            <span class="h6 font-weight-bold">QTY(Box)</span>
+                                                        </th>
+                                                        <th class="px-0 bg-transparent border-top-0">
+                                                            <span class="h6 font-weight-bold">PCS</span>
+                                                        </th>
+                                                        <th class="px-0 bg-transparent border-top-0 text-right">
+                                                            <span class="h6 font-weight-bold">Manufacturer <br> Price</span>
+                                                        </th>
+                                                        <th class="px-0 bg-transparent border-top-0 text-right">
+                                                            <span class="h6 font-weight-bold">Vat</span>
+                                                        </th>
+                                                        <th class="px-0 bg-transparent border-top-0 text-right">
+                                                            <span class="h6 font-weight-bold">Discount</span>
+                                                        </th>
+                                                        <th class="px-0 bg-transparent border-top-0 text-right">
+                                                            <span class="h6 font-weight-bold">Purchase <br>Price</span>
+                                                        </th>
+                                                        <th class="px-0 bg-transparent border-top-0 text-right">
+                                                            <span class="h6 font-weight-bold">Price(1Pc)</span>
+                                                        </th>
+                                                        <th class="px-0 bg-transparent border-top-0 text-right">
+                                                            <span class="h6 font-weight-bold">Total <br> Amount</span>
+                                                        </th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    {% for item in items %}
+                                                        <tr>
+                                                            <td class="px-0">{{ forloop.counter }}</td>
+                                                            <td class="px-0">
+                                                                {{ item.batch.medicine.medicine_name }}({{ item.batch.medicine.strength }})
+                                                            </td>
+                                                            <td class="px-0">
+                                                                {{ item.batch.box_quantity }}
+                                                            </td>
+                                                            <td class="px-0">
+                                                                {{ item.batch.total_quantity }}
+                                                            </td>
+                                                            <td class="px-0 text-right">
+                                                                {{ item.batch.medicine.manufacturer_price }}
+                                                            </td>
+                                                            <td class="px-0 text-right">
+                                                                {{ object.vat }}
+                                                            </td>
+                                                            <td class="px-0 text-right">
+                                                                {{ object.discount }}
+                                                            </td>
+                                                            <td class="px-0 text-right">
+                                                                 {{ item.batch.medicine.manufacturer_price }}
+                                                            </td>
+                                                            <td class="px-0 text-right">
+                                                                {{ item.batch.medicine.price_one }}
+                                                            </td>
+                                                            <td class="px-0 text-right">
+                                                                {{ item.calculated_price }}
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                    <tr>
+                                                        <td class="px-0 border-top border-top-2 text-right" colspan="9">
+                                                            <strong>Sub Total</strong>
+                                                        </td>
+                                                        <td class="px-0 text-right border-top border-top-2">
+                                                                <span class="fs-16 font-weight-600">
+                                                                {{ object.subtotal }} </span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="px-0 border-top border-top-2 text-right" colspan="9">
+                                                            <strong>Grand Total</strong>
+                                                        </td>
+                                                        <td class="px-0 text-right border-top border-top-2">
+                                                            <span class="fs-16 font-weight-600">
+                                                            {{ object.grand_total }} </span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="px-0 border-top border-top-2 text-right" colspan="9">
+                                                            <strong>Paid Amount</strong>
+                                                        </td>
+                                                        <td class="px-0 text-right border-top border-top-2">
+                                                            <span class="fs-16 font-weight-600">
+                                                            {{ object.paid_amount }} </span>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <hr class="my-5">
+                                            <h6 class="text-uppercase font-weight-bold">Comments </h6>
+                                            <p class="text-muted mb-0">
+                                                thank you
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </section>
+    </div>
+
+{% endblock content %}
+
+{% block scripts %}
+
+{% endblock scripts %}
+

@@ -1,0 +1,114 @@
+{% extends  'base.html' %}
+{% load static %}
+{% block title %}
+    <title>Add Return</title>
+{% endblock title %}
+
+
+{% block styles %}
+{% endblock styles %}
+
+{% block content %}
+
+    {% include 'sidebar.html' %}
+
+    <div class="content-wrapper" style="min-height: 201px;">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0 text-dark">Dashboard</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">Dashboard v1</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <span> {% include 'messages.html' %} </span>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <!-- Small boxes (Stat box) -->
+
+                <div class="body-content px-3 py-3">
+
+
+                    <div class="row">
+                        <div class="col-md-6 col-lg-6">
+                            <div class="card">
+                                <div class="card-header py-2">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="text-center">
+                                            <h6 class="fs-17 font-weight-600 mb-0">Return From Customer</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <form action="{% url 'return:return_invoice' %}"
+                                          id="return_invoice" method="get" accept-charset="utf-8">
+                                        <div class="form-group row">
+                                            <label for="invoice_no" class="col-sm-3 col-form-label"><b>Invoice No <i
+                                                    class="text-danger">*</i></b></label>
+                                            <div class="col-sm-6">
+                                                <input name="invoice_no" class="form-control" type="text"
+                                                       placeholder="Invoice No" id="invoice_no" value="">
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <button type="submit" class="btn btn-success">Search</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-6">
+                            <div class="card">
+                                <div class="card-header py-2">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h6 class="fs-17 font-weight-600 mb-0 text-center">Return To
+                                                Manufacturer</h6>
+                                        </div>
+                                        <div class="text-right">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <form action="{% url 'return:return_purchase' %}"
+                                          id="return_invoice" method="get" accept-charset="utf-8">
+                                        <div class="form-group row">
+                                            <label for="purchase_id" class="col-sm-3 col-form-label"><b>Purchase Id <i
+                                                    class="text-danger">*</i></b></label>
+                                            <div class="col-sm-6">
+                                                <input name="purchase_id" class="form-control" type="text"
+                                                       placeholder="Purchase Id" id="purchase_id" value="">
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <button type="submit" class="btn btn-success">Search</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+    </div>
+
+{% endblock content %}
+
+{% block scripts %}
+
+{% endblock scripts %}
