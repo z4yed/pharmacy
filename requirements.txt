@@ -4,7 +4,7 @@ Django==3.1.7
 future==0.18.2
 html5lib==1.1
 Pillow==8.1.0
-pkg-resources==0.0.0
+#pkg-resources==0.0.0
 PyPDF2==1.26.0
 python-barcode==0.13.1
 python-bidi==0.4.2
