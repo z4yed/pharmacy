@@ -39,7 +39,7 @@
                         <h6 class="text-center">Admin User</h6>
                         <span class="text-center">admin@gmail.com</span>
                     </div>
-                    <a href="" class="dropdown-item"><i class="fa fa-user"></i> My Profile</a>
+                    <a href="{% url 'users_auth:profile_url' request.user.userprofile.id %}" class="dropdown-item"><i class="fa fa-user"></i> My Profile</a>
                     <a href="{% url 'users_auth:update_user' request.user.userprofile.id %}" class="dropdown-item"><i class="fa fa-edit"></i> Edit Profile</a>
                     <a href="{% url 'users_auth:logout_url' %}" class="dropdown-item"><i class="fa fa-key"></i> Sign Out</a>
                 </div>

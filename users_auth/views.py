@@ -24,6 +24,7 @@ class RegistrationView(View):
         first_name = data.get('firstname')
         last_name = data.get('lastname')
         email = data.get('email')
+        phone = data.get('phone')
         password = data.get('password')
         about = data.get('about')
         image = request.FILES.get('image')
@@ -43,6 +44,7 @@ class RegistrationView(View):
             user_profile.role = is_admin
             user_profile.is_active = True if status == '1' else False
             user_profile.details = about
+            user_profile.phone = phone
 
             if image:
                 user_profile.image = image
@@ -86,6 +88,7 @@ class UpdateUser(View):
         first_name = data.get('firstname')
         last_name = data.get('lastname')
         email = data.get('email')
+        phone = data.get('phone')
         password = data.get('password')
         about = data.get('about')
         image = request.FILES.get('image')
@@ -111,6 +114,8 @@ class UpdateUser(View):
         if image:
             profile_obj.image = image
 
+        profile_obj.details = about
+        profile_obj.phone = phone
         profile_obj.role = is_admin
         profile_obj.is_active = True if status == '1' else False
         profile_obj.save()
@@ -163,3 +168,14 @@ class SignOut(View):
     def get(self, request):
         logout(request)
         return redirect('users_auth:login_url')
+
+class Profile(View):
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    def get(self, request, profile_id):
+        profile_obj = UserProfile.objects.get(id=profile_id)
+        context = {
+            'object': profile_obj
+        }
+        return render(request, 'users_auth/profile.html', context)

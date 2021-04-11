@@ -16,6 +16,7 @@ class UserProfile(models.Model):
     role = models.IntegerField(choices=USER_ROLES, default=1, null=True, blank=True)
     last_logout = models.DateTimeField(null=True, blank=True)
     ip_address = models.GenericIPAddressField(null=True, blank=True)
+    phone = models.CharField(max_length=12, null=True, blank=True)
 
     is_active = models.BooleanField(default=True)
 
