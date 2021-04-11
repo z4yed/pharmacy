@@ -169,6 +169,7 @@ class EditInvoice(View):
 
         invoice_discount = data.get('invoice_discount') if data.get('invoice_discount') else 0
         total_vat = data.get('total_tax_amount') if data.get('total_tax_amount') else 0
+
         paid_amount = data.get('paid_amount') if data.get('paid_amount') else 0
 
         invoice_obj.customer = customer_obj
@@ -290,6 +291,7 @@ class FetchMedicineInfo(View):
             'batches': batches,
             'unit': medicine_obj.unit.name,
             'price_of_one': medicine_obj.price_one,
+            'vat': medicine_obj.vat,
         }
         # print(context)
         return JsonResponse(context)

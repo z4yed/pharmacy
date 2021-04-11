@@ -187,11 +187,20 @@ function increase_row(module){
                                tabindex="9" placeholder="0.00">
 
                     </td>
-
+                    
+                   
                     <td class="invoice_fields">
                         <input class="total_price form-control text-right" type="text"
                                name="total_price[]" id="total_price_${next_row}" value="0.00"
                                readonly="readonly">
+                    </td>
+                    
+                     <td>
+                        <input type="text" name="vat[]"
+                               id="vat_${next_row}"
+                               class="form-control text-right valid_number"
+                               tabindex="10" readonly>
+
                     </td>
 
                     <td>
@@ -415,6 +424,8 @@ function no_error(row_id){
 
 function calculate_total_discount(){
     let discount = 0
+    let total_vat = 0
+
     $('.line_discount').each(function (){
 
         let row_id = this.id
@@ -429,12 +440,18 @@ function calculate_total_discount(){
         let l_discount = total_price - discounted_total  // Calculating Discount with percentage of each row
         discount += l_discount
 
+
+        // Calculating total Vat
+        let line_vat = parseFloat($("#vat_"+row_id).val()) || 0
+        total_vat += total_price *  ( line_vat / 100 )
+
     })
 
     discount += parseFloat($("#invdcount").val()) || 0
 
 
     $("#total_discount_amount").val(discount.toFixed(2));
+    $("#total_tax_amount").val(total_vat.toFixed(2));
 
     calculate_grand_total();
 
@@ -447,7 +464,10 @@ function calculate_grand_total(){
         total += parseFloat($(this).val())
     });
 
+    let total_tax = parseFloat($("#total_tax_amount").val()) || 0
+
     total -= parseFloat($("#invdcount").val()) || 0
+    total += total_tax
 
     $("#grandTotal").val(total.toFixed(2));
 

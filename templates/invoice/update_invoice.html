@@ -160,8 +160,9 @@
                                                             class="text-danger">*</i></th>
                                                     <th class="text-center" width="150">Price <i
                                                             class="text-danger">*</i></th>
-                                                    <th class="text-center">Discount %</th>
+                                                    <th class="text-center">Discount (%)</th>
                                                     <th class="text-center" width="150">Total</th>
+                                                    <th class="text-center">Vat(%)</th>
                                                     <th class="text-center">Action</th>
                                                 </tr>
                                                 </thead>
@@ -231,6 +232,14 @@
                                                                    name="total_price[]" id="total_price_{{ forloop.counter }}" value="{{ item.total_bill_exclude_vat }}"
                                                                    readonly="readonly">
                                                         </td>
+
+                                                        <td>
+                                                            <input class="form-control text-right" type="text"
+                                                                   name="vat[]" id="vat_{{ forloop.counter }}" value="{{ item.batch.medicine.vat }}"
+                                                                   readonly="readonly">
+                                                        </td>
+
+
                                                         <td>
 
                                                             <button type="button" class="btn btn-danger btn-sm" id="{{ forloop.counter }}"
@@ -255,6 +264,7 @@
                                                                onchange="" value="{{ object.invoice_discount }}"
                                                                tabindex="12">
                                                     </td>
+                                                    <td></td>
                                                     <td>
                                                         <button class="btn btn-info btn-sm" type="button"
                                                                 onclick="increase_row('invoice')"
@@ -271,36 +281,33 @@
                                                                name="total_discount" value="{{ object.total_discount }}" readonly="readonly">
                                                     </td>
                                                 </tr>
-                                                <tr class="hideableRow hiddenRow collapse" id="collapseExample">
-                                                    <td class="text-right" colspan="8"><b>Vat </b></td>
-                                                    <td class="text-right">
-                                                        <input id="total_tax_amount0" tabindex="-1"
-                                                               class="form-control text-right valid totalTax valid_number"
-                                                               name="total_tax0" value="0.00" readonly="readonly"
-                                                               aria-invalid="false" type="text">
-                                                    </td>
-                                                </tr>
-                                                <tr class="hideableRow hiddenRow collapse" id="collapseExample">
-                                                    <td class="text-right" colspan="8"><b>IGTA </b></td>
-                                                    <td class="text-right">
-                                                        <input id="total_tax_amount1" tabindex="-1"
-                                                               class="form-control text-right valid totalTax valid_number"
-                                                               name="total_tax1" value="0.00" readonly="readonly"
-                                                               aria-invalid="false" type="text">
-                                                    </td>
-                                                </tr>
+{#                                                <tr class="hideableRow hiddenRow collapse" id="collapseExample">#}
+{#                                                    <td class="text-right" colspan="8"><b>Vat </b></td>#}
+{#                                                    <td class="text-right">#}
+{#                                                        <input id="total_tax_amount0" tabindex="-1"#}
+{#                                                               class="form-control text-right valid totalTax valid_number"#}
+{#                                                               name="total_tax0" value="0.00" readonly="readonly"#}
+{#                                                               aria-invalid="false" type="text">#}
+{#                                                    </td>#}
+{#                                                </tr>#}
+{#                                                <tr class="hideableRow hiddenRow collapse" id="collapseExample">#}
+{#                                                    <td class="text-right" colspan="8"><b>IGTA </b></td>#}
+{#                                                    <td class="text-right">#}
+{#                                                        <input id="total_tax_amount1" tabindex="-1"#}
+{#                                                               class="form-control text-right valid totalTax valid_number"#}
+{#                                                               name="total_tax1" value="0.00" readonly="readonly"#}
+{#                                                               aria-invalid="false" type="text">#}
+{#                                                    </td>#}
+{#                                                </tr>#}
                                                 <tr>
                                                     <td class="text-right" colspan="8"><b>Total VAT:</b></td>
                                                     <td class="text-right">
                                                         <input id="total_tax_amount" tabindex="-1"
                                                                class="form-control text-right valid valid_number"
-                                                               name="total_tax" value="0.00" readonly="readonly"
+                                                               name="total_tax_amount" value="{{ object.total_vat }}" readonly="readonly"
                                                                aria-invalid="false" type="text">
                                                     </td>
-                                                    <td><a class="btn btn-warning taxbutton text-center"
-                                                           data-toggle="collapse" data-target="#collapseExample"
-                                                           aria-expanded="false" aria-controls="collapseExample"><i
-                                                            class="fa fa-angle-double-up"></i></a></td>
+
                                                 </tr>
                                                 <tr>
                                                     <td colspan="8" class="text-right"><b>Grand Total:</b></td>
