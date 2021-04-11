@@ -1,9 +1,9 @@
 from django.contrib import messages
+from django.contrib.auth import login, authenticate
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.views.generic.base import View
 from .models import USER_ROLES, UserProfile
-
 
 class HomeView(View):
     def get(self, request):
@@ -131,5 +131,25 @@ class RemoveUser(View):
         return redirect('users_auth:users_list')
 
 
+class UserLogin(View):
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
 
+    def get(self, request):
+        context = dict()
+        return render(request, 'users_auth/login.html', context)
 
+    def post(self, request):
+        data = request.POST
+
+        username = data.get('username')
+        password = data.get('password')
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            return redirect('users_auth:home_url')
+        else:
+            messages.info(request, 'Username or Password is Incorrect!')
+        return redirect('users_auth:login_url')

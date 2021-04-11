@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+
+
+<!--[if (gte IE 9)|!(IE)]><!--> <html lang="en"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="{% static 'css/login_styles.css' %}" >
+</head>
+<body>
+<!-- <div class="container" style=" margin-left: 35%; margin-right:20%; padding-top: 5%;background-color:greenyellow"> -->
+<div class="container">
+    <section id="content">
+        <form action="{% url 'users_auth:login_url' %}" method="POST">
+            {% csrf_token %}
+            <h1>Login Form</h1>
+
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+
+            <div class="form-group">
+
+                <div class="form-row">
+                    <input type="text" placeholder="Username" required="" id="username" name="username" />
+                </div>
+                <div class="form-row">
+                    <input type="password" placeholder="Password" required="" id="password" name="password" />
+                </div>
+                <div class="form-group">
+                </div>
+                <input class= "btn btn-success" type="submit" value="Log in" />
+                <!-- <a href="#">Lost your password?</a>
+                <a href="#">Register</a> -->
+            </div>
+        </form><!-- form -->
+
+    </section><!-- content -->
+</div><!-- container -->
+</body>
+</html>

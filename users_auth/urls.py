@@ -9,4 +9,7 @@ urlpatterns = [
     path('users_list', views.UserList.as_view(), name='users_list'),
     path('update-user/<int:profile_id>', views.UpdateUser.as_view(), name='update_user'),
     path('remove-user/<int:profile_id>', views.RemoveUser.as_view(), name='remove_user'),
+
+    # authentication
+    path('login', views.UserLogin.as_view(), name='login_url'),
 ]
