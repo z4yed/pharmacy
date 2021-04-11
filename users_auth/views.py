@@ -1,9 +1,10 @@
 from django.contrib import messages
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.views.generic.base import View
 from .models import USER_ROLES, UserProfile
+
 
 class HomeView(View):
     def get(self, request):
@@ -152,4 +153,13 @@ class UserLogin(View):
             return redirect('users_auth:home_url')
         else:
             messages.info(request, 'Username or Password is Incorrect!')
+        return redirect('users_auth:login_url')
+
+
+class SignOut(View):
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    def get(self, request):
+        logout(request)
         return redirect('users_auth:login_url')
