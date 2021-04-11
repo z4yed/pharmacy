@@ -11,5 +11,5 @@ urlpatterns = [
     path('remove-user/<int:profile_id>', views.RemoveUser.as_view(), name='remove_user'),
 
     # authentication
-    path('login', views.UserLogin.as_view(), name='login_url'),
+    path('login/', views.UserLogin.as_view(), name='login_url'),
 ]
