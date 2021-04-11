@@ -1,0 +1,52 @@
+{% load static %}
+
+<nav class="navbar-custom-menu navbar navbar-expand-xl m-0">
+    <div class="sidebar-toggle-icon toggled" id="sidebarCollapse">
+        <span></span>
+    </div>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="true" aria-label="Toggle navigation"><span></span> <span></span></button>
+    </div>
+    <div class="navbar-icon d-flex">
+        <ul class="navbar-nav flex-row align-items-center">
+            <li class="nav-item dropdown notification">
+                <a class="nav-link" href="" title="Expired">
+                    <i class="far fa-bell"></i>
+                    <span class="notification-badge">0</span>
+                </a>
+            </li>
+            <li class="nav-item dropdown notification">
+                <a class="nav-link" href="" title="Stock Out">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span class="notification-badge">9</span>
+                </a>
+            </li>
+            <li class="nav-item dropdown user-menu">
+                <a class="nav-link dropdown-toggle material-ripple" href="#" data-toggle="dropdown">
+
+                    <i class="fa fa-user-plus"></i>
+                </a>
+                <div class="dropdown-menu">
+                    <div class="dropdown-header d-sm-none">
+                        <a href="" class="header-arrow"><i class="icon ion-md-arrow-back"></i></a>
+                    </div>
+                    <div class="text-center">
+                        <div class="img-user">
+                            <img class="img-thumbnail " height="100" width="80" src="{{ request.user.userprofile.image_url }}" alt="">
+                        </div>
+                        <h6 class="text-center">Admin User</h6>
+                        <span class="text-center">admin@gmail.com</span>
+                    </div>
+                    <a href="" class="dropdown-item"><i class="fa fa-user"></i> My Profile</a>
+                    <a href="" class="dropdown-item"><i class="fa fa-edit"></i> Edit Profile</a>
+                    <a href="" class="dropdown-item"><i class="fa fa-key"></i> Sign Out</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="typcn typcn-th-menu-outline"></i>
+    </button>
+</nav>
