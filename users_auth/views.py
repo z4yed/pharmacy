@@ -169,6 +169,7 @@ class SignOut(View):
         logout(request)
         return redirect('users_auth:login_url')
 
+
 class Profile(View):
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)

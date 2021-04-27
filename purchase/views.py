@@ -57,6 +57,7 @@ class AddPurchase(View):
         vat = data.get('vat')
         discount = data.get('discount')
         paid_amount = float(data.get('paid_amount'))
+        due_amount = float(data.get('due_amount'))
 
         purchase_obj = Purchase(purchase_id=purchase_id, manufacturer=manufacturer_obj, date=purchase_date, invoice=invoice_no,
                                 details=details, payment_types=payment_type, bank=bank_id if bank_id else None,
@@ -88,6 +89,14 @@ class AddPurchase(View):
             item_obj.save()
 
         messages.success(request, 'Purchase Added Successfully. ')
+
+        # updating Current Balance of Manufacturer
+        # If balance is positive, Manufacturer will get money from shop
+        # else shop will get money from manufacturer
+
+        manufacturer_obj.previous_balance += due_amount
+        manufacturer_obj.save()
+
         return redirect('purchase:purchase-list')
 
 
