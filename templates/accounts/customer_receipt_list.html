@@ -1,7 +1,7 @@
 {% extends  'base.html' %}
 {% load static %}
 {% block title %}
-    <title>Manufacturer Payment</title>
+    <title>All Receipts</title>
 {% endblock title %}
 
 
@@ -33,7 +33,7 @@
                                 <div class="card-header py-2">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div>
-                                            <h6 class="fs-17 font-weight-600 mb-0">Payment List</h6>
+                                            <h6 class="fs-17 font-weight-600 mb-0">Receipt List</h6>
                                         </div>
                                     </div>
                                 </div>
@@ -86,16 +86,16 @@
                                                 </thead>
                                                 <tbody>
 
-                                                {% for payment in payments %}
+                                                {% for receipt in receipts %}
 
                                                     <tr role="row">
                                                         <td tabindex="0">{{ forloop.counter }}</td>
-                                                        <td>{{ payment.voucher_no }}</td>
-                                                        <td>{{ payment.manufacturer.name }}</td>
-                                                        <td>{{ payment.date | date:"M d, Y"}}</td>
-                                                        <td class="total_sale text-right">{{ payment.amount }}</td>
+                                                        <td>{{ receipt.voucher_no }}</td>
+                                                        <td>{{ receipt.customer.name }}</td>
+                                                        <td>{{ receipt.date | date:"M d, Y"}}</td>
+                                                        <td class="total_sale text-right">{{ receipt.amount | floatformat:2 }}</td>
                                                         <td>
-                                                            <a href="{% url 'accounts:print_payment_pdf' payment.id %}" target="_blank" class="btn btn-success-soft btn-sm" data-toggle="tooltip" data-placement="left" title="Print"><i class="fas fa-print" aria-hidden="true"></i></a>
+                                                            <a href="{% url 'accounts:print_receipt_pdf' receipt.id %}" target="_blank" class="btn btn-success-soft btn-sm" data-toggle="tooltip" data-placement="left" title="Print"><i class="fas fa-print" aria-hidden="true"></i></a>
                                                             <a onclick="return confirm('Are You Sure ?')" href="" class="btn btn-danger-soft btn-sm" data-toggle="tooltip" data-placement="right" title="Delete "><i class="far fa-trash-alt" aria-hidden="true"></i></a>
                                                         </td>
                                                     </tr>

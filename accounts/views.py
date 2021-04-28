@@ -8,6 +8,7 @@ from customer.models import Customer
 from purchase.models import PAYMENT_TYPES, BANK_CHOICES
 from manufacturer.models import Manufacturer
 from accounts.models import ManufacturerPayment as MP, CustomerReceipt as CR
+from system.utils import render_mp_pdf_view, render_cr_pdf_view
 
 
 class ManufacturerPayment(View):
@@ -68,11 +69,16 @@ class PaymentList(View):
         return render(request, 'accounts/manufacturer_payment_list.html', context)
 
 
-class RemovePayment(View):
-    pass
-
-
 class PrintPaymentInvoice(View):
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    def get(self, request, payment_id):
+        response = render_mp_pdf_view(payment_id)
+        return response
+
+
+class RemovePayment(View):
     pass
 
 
@@ -116,3 +122,26 @@ class CustomerReceipt(View):
 
         messages.success(request, f'BDT: {amount} Received Successfully from : {customer_obj.name}')
         return redirect('accounts:customer_receipt')
+
+
+class ReceiptList(View):
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    def get(self, request):
+        receipts = CR.objects.filter(is_active=True)
+
+        context = {
+            'receipts': receipts
+        }
+        return render(request, 'accounts/customer_receipt_list.html', context)
+
+
+class PrintReceiptInvoice(View):
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    def get(self, request, receipt_id):
+        response = render_cr_pdf_view(receipt_id)
+        return response
+

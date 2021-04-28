@@ -5,11 +5,11 @@ from invoice.models import Invoice
 from purchase.models import Purchase
 
 from io import BytesIO
-from django.conf import settings
 from django.http import HttpResponse
 from django.template.loader import get_template
 from xhtml2pdf import pisa
-
+from accounts.models import ManufacturerPayment as MP, CustomerReceipt as CR
+from settings.models import Setting
 
 
 ROLE_CHOICES = (
@@ -24,23 +24,6 @@ CUSTOMER_STATUS = (
 )
 
 
-CURRENCY_CHOICES = (
-    (1, "TAKA"),
-    (2, "USD"),
-)
-
-DISCOUNT_TYPES = (
-    (1, 'Discount Percentage %'),
-    (2, 'Discount'),
-    (3, 'Fixed Discount'),
-)
-
-TIMEZONE_CHOICES = (
-    (1, 'Asia/Dhaka'),
-    (2, 'Asia/Tokyo'),
-)
-
-
 def render_to_pdf(template_src, context_dict={}):
     template = get_template(template_src)
     html = template.render(context_dict)
@@ -49,6 +32,56 @@ def render_to_pdf(template_src, context_dict={}):
     if not pdf.err:
         return HttpResponse(result.getvalue(), content_type='application/pdf')
     return None
+
+
+def render_mp_pdf_view(payment_id):  # mp stands for Manufacturer Payment
+    payment_obj = MP.objects.get(id=payment_id)
+    template_path = 'accounts/payment_pdf.html'
+
+    context = {
+        'object': payment_obj,
+        'setting': Setting.objects.last(),
+    }
+
+    # Create a Django response object, and specify content_type as pdf
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'filename="Payment Invoice.pdf"'
+    # find the template and render it.
+    template = get_template(template_path)
+    html = template.render(context)
+
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+        html, dest=response)
+    # if error then show some funy view
+    if pisa_status.err:
+        return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
+
+
+def render_cr_pdf_view(receipt_id):  # cr stands for Customer Receipt
+    receipt_obj = CR.objects.get(id=receipt_id)
+    template_path = 'accounts/receipt_pdf.html'
+
+    context = {
+        'object': receipt_obj,
+        'setting': Setting.objects.last(),
+    }
+
+    # Create a Django response object, and specify content_type as pdf
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'filename="Receipt Invoice.pdf"'
+    # find the template and render it.
+    template = get_template(template_path)
+    html = template.render(context)
+
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+        html, dest=response)
+    # if error then show some funy view
+    if pisa_status.err:
+        return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
 
 
 def random_id_generator(module):

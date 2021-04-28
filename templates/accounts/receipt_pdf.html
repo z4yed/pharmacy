@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Receipt Invoice</title>
+
+</head>
+<body>
+
+
+<img src="media/{{ setting.logo }}" alt="Paris" id="pharmacy" style="text-align: center">
+<p style="text-align: center;">{{ setting.company_title }}</p>
+<p style="text-align: center;">Address : {{ setting.address }}</p>
+<p style="text-align: center;">Phone No : {{ setting.phone }}</p>
+
+<hr style="width:50%;text-align:center;margin: auto;">
+
+<h3 style="text-align: center;">{{ object.customer.name }}</h3>
+<p style="text-align: center;">Mobile No : {{ object.customer.mobile_number }}</p>
+<p style="text-align: center;">Date : {{ object.date }}</p>
+
+<table style="width:50%; text-align:center; margin: auto;">
+    <tbody>
+    <tr>
+        <td>Voucher No:</td>
+        <td>{{ object.voucher_no }}</td>
+    </tr>
+
+    <tr>
+        <td>Payment Type:</td>
+        <td>{{ object.get_payment_type_display }}</td>
+    </tr>
+
+    <tr>
+        <td>Amount:</td>
+        <td>{{ object.amount }}</td>
+    </tr>
+
+    <tr>
+        <td>Remarks:</td>
+        <td>{{ object.remarks }}</td>
+    </tr>
+    </tbody>
+</table>
+
+
+<p style="text-align: center;">Powered By:<a href="#"> {{ setting.company_title }}</a></p>
+
+</body>
+</html>
