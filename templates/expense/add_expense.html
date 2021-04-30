@@ -1,0 +1,192 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    <title>Add Expense</title>
+{% endblock title %}
+
+
+{% block styles %}
+{% endblock styles %}
+
+
+
+{% block content %}
+
+    {% include 'sidebar.html' %}
+
+    <div class="content-wrapper" style="min-height: 201px;">
+        <!-- Content Header (Page header) -->
+        {% include 'navbar.html' %}
+        <!-- /.content-header -->
+
+        <span> {% include 'messages.html' %} </span>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <!-- Small boxes (Stat box) -->
+
+                <div class="body-content px-3 py-3" data-select2-id="select2-data-15-t0xf">
+
+
+                    <div class="row" data-select2-id="select2-data-14-491u">
+                        <div class="col-sm-12 col-md-12" data-select2-id="select2-data-13-qazj">
+                            <div class="card " data-select2-id="select2-data-12-pns3">
+                                <div class="card-header py-2">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h4 class="fs-17 font-weight-600 mb-0">Add Expense</h4>
+                                        </div>
+                                        <div class="text-right">
+                                            <a href="{% url 'expense:expense_list' %}"
+                                               class="btn btn-success btn-sm mr-1"><i class="fas fa-list mr-1"></i>
+                                                Expense List</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body" data-select2-id="select2-data-11-3ko7">
+                                    <form action="{% url 'expense:add_expense' %}"
+                                          enctype="multipart/form-data" method="post" accept-charset="utf-8"> {% csrf_token %}
+                                        <div class="row" data-select2-id="select2-data-9-zp6n">
+                                            <div class="col-sm-12">
+                                                <div class="form-group row">
+                                                    <label for="date" class="col-sm-3 col-form-label">Date <i
+                                                            class="text-danger">*</i>
+                                                    </label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" name="dtpDate" id="dtpDate"
+                                                               class="form-control datepicker" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12" id="payment_from_1">
+                                                <div class="form-group row">
+                                                    <label for="expense_type" class="col-sm-3 col-form-label">Expense
+                                                        Type <i class="text-danger">*</i></label>
+                                                    <div class="col-sm-8">
+                                                        <select name="expense_type"
+                                                                class="form-control"
+                                                                tabindex="-1"
+                                                                aria-hidden="true">
+                                                            <option value="default">
+                                                                Select Expense Type
+                                                            </option>
+                                                            {% for item in expense_items %}
+                                                                <option value="{{ item.id }}">{{ item.name }}</option>
+                                                            {% endfor %}
+
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group row">
+                                                <label for="payment_type" class="col-md-3 col-form-label">Payment
+                                                    Type<i class="text-danger"> * </i>:</label>
+                                                <div class="col-md-8">
+                                                    <div class="">
+                                                        <select name="payment_type" id="payment_type"
+                                                                class="form-control"
+                                                                tabindex="-1"
+                                                                aria-hidden="true">
+                                                            {% for payment_type in payment_types %}
+                                                                <option value="{{ payment_type.0 }}">{{ payment_type.1 }}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        <div class="form-group row d-none" id="bank_div">
+                                            <label for="bank" class="col-md-3 col-form-label"
+                                                       id="bank_label"
+                                                >Bank: <i class="text-danger">*</i></label>
+                                                <div class="col-md-8">
+                                                    <div class="">
+                                                        <select name="bank_id"
+                                                                class="form-control"
+                                                                id="bank_id"
+                                                                tabindex="-1" aria-hidden="true">
+                                                            <option value="" selected="selected"
+                                                                    data-select2-id="select2-data-6-xio6">Select Bank
+                                                            </option>
+                                                            {% for bank in banks %}
+
+                                                                <option value="{{ bank.0 }}"> {{ bank.1 }} </option>
+
+                                                            {% endfor %}
+
+                                                        </select>
+                                                    </div>
+                                        </div>
+                                            </div>
+
+                                            <div class="col-sm-12" id="payment_from_1">
+                                                <div class="form-group row">
+                                                    <label for="date" class="col-sm-3 col-form-label">Amount<i
+                                                            class="text-danger">*</i></label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" name="amount" id="amount" maxlength="10"
+                                                               class="form-control numberField" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                         <div class="col-sm-12" id="remarks">
+                                                <div class="form-group row">
+                                                    <label for="date" class="col-sm-3 col-form-label">Note: <i
+                                                            ></i></label>
+                                                    <div class="col-sm-8">
+                                                        <textarea name="note" rows="4"
+                                                                  class="form-control"> </textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-12 text-right">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-3"></label>
+                                                    <div class="col-sm-8">
+                                                        <input type="submit" id="add_receive"
+                                                               class="btn btn-success btn-large" name="save"
+                                                               value="Save" tabindex="9">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- /.row (main row) -->
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
+
+{% endblock content %}
+
+
+{% block scripts %}
+
+    <script>
+    $(document).ready(function () {
+        $("#payment_type").on('change', function () {
+            let payment_type = $("#payment_type").val();
+            if (payment_type == 1) {
+                $("#bank_div").addClass('d-none');
+            } else {
+                $("#bank_div").removeClass('d-none');
+            }
+        });
+    });
+    </script>
+{% endblock scripts %}

@@ -145,6 +145,13 @@ $(document).ready(function (){
               numbers: true,
             },
 
+
+            //expense
+            expense_type:{
+                required: true,
+                valueNotEquals: 'default',
+            },
+
         }
     });
 

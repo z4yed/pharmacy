@@ -563,27 +563,22 @@
                   </p>
                 </a>
                 <ul class="nav nav-treeview">
+
                   <li class="nav-item">
-                    <a href="#" class="nav-link">
-                      <i class="far fa-dot-circle nav-icon"></i>
-                      <p>Add Expense Item</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{% url 'expense:expense_items' %}" class="nav-link">
                       <i class="far fa-dot-circle nav-icon"></i>
                       <p>Expense Item List</p>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{% url 'expense:add_expense' %}" class="nav-link">
                       <i class="far fa-dot-circle nav-icon"></i>
                       <p>Add Expense</p>
                     </a>
                   </li>
 
                     <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{% url 'expense:expense_list' %}" class="nav-link">
                       <i class="far fa-dot-circle nav-icon"></i>
                       <p>Expense List</p>
                     </a>
@@ -777,7 +772,7 @@
                   <p>Currency</p>
                 </a>
               </li><li class="nav-item">
-                <a href="" class="nav-link">
+                <a href="{% url 'settings:pharmacy_details' %}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Setting</p>
                 </a>

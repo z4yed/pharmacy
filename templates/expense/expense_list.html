@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    <title>Expense List</title>
+{% endblock title %}
+
+
+{% block styles %}
+{% endblock styles %}
+
+
+
+{% block content %}
+
+    {% include 'sidebar.html' %}
+
+    <div class="content-wrapper" style="min-height: 201px;">
+        <!-- Content Header (Page header) -->
+        {% include 'navbar.html' %}
+        <!-- /.content-header -->
+
+        <span> {% include 'messages.html' %} </span>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <!-- Small boxes (Stat box) -->
+
+
+                <div class="col-md-12 col-md-12">
+                    <div class="card ">
+                        <div class="card-header py-2">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h4 class="fs-17 font-weight-600 mb-0">Expense List</h4>
+                                </div>
+                                <div class="text-right">
+                                    <a href="{% url 'expense:add_expense' %}"
+                                       class="btn btn-success btn-sm mr-1"><i class="fas fa-plus mr-1"></i>Add
+                                        Expense</a>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <form action="" class="form-inline" method="post" accept-charset="utf-8">
+                                        <label class="sr-only" for="from_date">Start Date</label>
+                                        <div class="input-group mb-2 mr-sm-2">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">Start Date</div>
+                                            </div>
+                                            <input type="text" class="form-control datepicker psdate" name="from_date"
+                                                   id="from_date" placeholder="Start Date" value="">
+                                        </div>
+                                        <label class="sr-only" for="to_date">End Date</label>
+                                        <div class="input-group mb-2 mr-sm-2">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">End Date</div>
+                                            </div>
+                                            <input type="text" class="form-control datepicker pedate" id="to_date"
+                                                   name="to_date" placeholder="End Date">
+                                        </div>
+                                        <button type="button" id="btn-filter-pur" class="btn btn-success mb-2">Find
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <div id="expenseList_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+
+                                    <table class="table display table-bordered table-striped table-hover no-footer dtr-inline"
+                                           cellspacing="0" width="100%" id="expenseList" role="grid"
+                                           aria-describedby="expenseList_info" style="width: 100%;">
+                                        <thead>
+                                        <tr role="row">
+                                            <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 55px;"
+                                                aria-label="Sl">Sl
+                                            </th>
+                                            <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 149px;"
+                                                aria-label="Date">Date
+                                            </th>
+                                            <th class="sorting_asc" tabindex="0" aria-controls="expenseList" rowspan="1"
+                                                colspan="1" style="width: 202px;" aria-sort="ascending"
+                                                aria-label="Expense Item: activate to sort column descending">Expense
+                                                Item
+                                            </th>
+                                            <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 98px;"
+                                                aria-label="Debit">Amount
+                                            </th>
+
+                                            <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 208px;"
+                                                aria-label="Remarks">Note
+                                            </th>
+                                            <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 111px;"
+                                                aria-label="Action">Action
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for expense in expenses %}
+
+                                            <tr role="row" class="odd">
+                                            <td tabindex="0">{{ forloop.counter }}</td>
+                                            <td>{{ expense.date | date:"M d, Y" }}</td>
+                                            <td class="sorting_1">{{ expense.expense_type.name }}</td>
+                                            <td>{{ expense.amount }}</td>
+                                            <td>{{ expense.remarks }}</td>
+                                            <td><a onclick="return confirm('Are You Sure ?')"
+                                                   href="{% url 'expense:remove_expense' expense.id %}"
+                                                   class="btn btn-danger btn-sm" data-toggle="tooltip"
+                                                   data-placement="right" title="Delete "><i class="far fa-trash-alt"
+                                                                                             aria-hidden="true"></i></a>
+                                            </td>
+                                        </tr>
+
+                                        {% endfor %}
+
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- /.row (main row) -->
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
+
+{% endblock content %}
+
+
+{% block scripts %}
+
+    <script>
+        $(document).ready(function () {
+            $("#expenseList").DataTable();
+        });
+    </script>
+{% endblock scripts %}
+
