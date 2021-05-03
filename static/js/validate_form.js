@@ -152,6 +152,12 @@ $(document).ready(function (){
                 valueNotEquals: 'default',
             },
 
+            // Attendance
+            employee_id:{
+                required: true,
+                valueNotEquals: 'default',
+            }
+
         }
     });
 

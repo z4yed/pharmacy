@@ -43,3 +43,8 @@ class Employee(models.Model):
         if self.image:
             url = self.image.url
         return url
+
+    @property
+    def get_full_name(self):
+        return "{} {}".format(self.first_name, self.last_name)
+

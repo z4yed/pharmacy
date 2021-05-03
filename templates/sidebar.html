@@ -369,18 +369,6 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Add Closing</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Closing List</p>
-                </a>
-              </li>
-              <li class="nav-item">
                 <a href="{% url 'reports:sales-report' %}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Sales Report</p>
@@ -477,19 +465,19 @@
                 </a>
                 <ul class="nav nav-treeview">
                   <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{% url 'attendance:add_attendance' %}" class="nav-link">
                       <i class="far fa-dot-circle nav-icon"></i>
                       <p>Add Attendance</p>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{% url 'attendance:attendance_list' %}" class="nav-link">
                       <i class="far fa-dot-circle nav-icon"></i>
                       <p>Attendance List</p>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{% url 'attendance:attendance_filter' %}" class="nav-link">
                       <i class="far fa-dot-circle nav-icon"></i>
                       <p>Date Wise Attendance Report</p>
                     </a>

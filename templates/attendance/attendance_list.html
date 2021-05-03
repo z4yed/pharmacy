@@ -1,0 +1,177 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    <title>Attendance List</title>
+{% endblock title %}
+
+
+{% block styles %}
+{% endblock styles %}
+
+
+
+{% block content %}
+
+    {% include 'sidebar.html' %}
+
+    <div class="content-wrapper" style="min-height: 201px;">
+        <!-- Content Header (Page header) -->
+        {% include 'navbar.html' %}
+        <!-- /.content-header -->
+
+        <span> {% include 'messages.html' %} </span>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <!-- Small boxes (Stat box) -->
+
+                <div class="body-content px-3 py-3">
+
+
+                    <div class="row">
+                        <div class="col-md-12 col-md-12">
+                            <div class="card ">
+                                <div class="card-header py-2">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h4 class="fs-17 font-weight-600 mb-0">Attendance List</h4>
+                                        </div>
+                                        <div class="text-right">
+                                            <a href="{% url 'attendance:add_attendance' %}"
+                                               class="btn btn-success btn-sm mr-1"><i class="fas fa-plus mr-1"></i>Add
+                                                Attendance</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <div id="attendanceList_wrapper"
+                                             class="dataTables_wrapper dt-bootstrap4 no-footer">
+                                            <table class="table display table-bordered table-striped table-hover custom-table dataTable no-footer dtr-inline"
+                                                   cellspacing="0" width="100%" id="attendanceList" role="grid"
+                                                   aria-describedby="attendanceList_info" style="width: 100%;">
+                                                <thead>
+                                                <tr role="row">
+                                                    <th class="sorting_disabled" rowspan="1" colspan="1"
+                                                        style="width: 62px;" aria-label="Sl">Sl
+                                                    </th>
+                                                    <th class="sorting_disabled" rowspan="1" colspan="1"
+                                                        style="width: 161px;" aria-label="Employee">Employee
+                                                    </th>
+                                                    <th class="sorting_asc" tabindex="0" aria-controls="attendanceList"
+                                                        rowspan="1" colspan="1" style="width: 152px;"
+                                                        aria-sort="ascending"
+                                                        aria-label="Date: activate to sort column descending">Date
+                                                    </th>
+                                                    <th class="sorting_disabled" rowspan="1" colspan="1"
+                                                        style="width: 128px;" aria-label="Sign In">Sign In
+                                                    </th>
+                                                    <th class="sorting_disabled" rowspan="1" colspan="1"
+                                                        style="width: 152px;" aria-label="Sign Out">Sign Out
+                                                    </th>
+                                                    <th class="sorting_disabled" rowspan="1" colspan="1"
+                                                        style="width: 152px;" aria-label="Staytime">Staytime
+                                                    </th>
+                                                    <th class="sorting_disabled" rowspan="1" colspan="1"
+                                                        style="width: 122px;" aria-label="Action">Action
+                                                    </th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                {% for attendance in attendances %}
+
+                                                    <tr role="row" class="odd">
+                                                    <td tabindex="0">{{ forloop.counter }}</td>
+                                                    <td>{{ attendance.employee.get_full_name }}</td>
+                                                    <td class="sorting_1">{{ attendance.date | date:"M d, Y" }}</td>
+                                                    <td>{{ attendance.sign_in_time }}</td>
+
+                                                        {% if attendance.signed_out %}
+                                                            <td>{{ attendance.sign_out_time }}</td>
+                                                        {% else %}
+                                                           <td> <button type="button" data-toggle="modal" data-target="#sign_outmodal{{ attendance.id }}"
+                                                                        class="btn btn-success"> Sign Out </button> </td>
+                                                        {% endif %}
+
+                                                    <td>{{ attendance.total_stay_time }} </td>
+                                                    <td>
+                                                        <a onclick="return confirm('Are You Sure ?')"
+                                                           href="{% url 'attendance:remove_attendance' attendance.id %}"
+                                                           class="btn btn-danger btn-sm" data-toggle="tooltip"
+                                                           data-placement="right" title="Delete "><i
+                                                                class="far fa-trash-alt" aria-hidden="true"></i></a>
+                                                    </td>
+                                                </tr>
+
+
+                                                    <div class="modal fade" id="sign_outmodal{{ attendance.id }}" role="dialog">
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h3 class="modal-title">Sign Out</h3><a href="#" class="close  md-close"
+                                                                                                            data-dismiss="modal">×</a>
+                                                                </div>
+                                                                <form action="{% url 'attendance:update_attendance' attendance.id %}"
+                                                                          class="form-vertical" id="singout_form" method="post"
+                                                                          accept-charset="utf-8"> {% csrf_token %}
+                                                                <div class="modal-body">
+                                                                    <div class="panel-body">
+                                                                        <div class="form-group row">
+                                                                            <label for="sign_out" class="col-sm-4 col-form-label">Sign Out <i
+                                                                                    class="text-danger">*</i></label>
+                                                                            <div class="col-sm-6">
+                                                                                <input class="form-control" name="sign_out"
+                                                                                       id="sign_out" type="time" placeholder="Sign Out"
+                                                                                       required="" tabindex="1">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                    <div class="modal-footer">
+                                                                        <a href="#" class="btn btn-danger" tabindex="5"
+                                                                           data-dismiss="modal">Close</a>
+                                                                        <input type="submit" tabindex="6"
+                                                                               class="btn btn-success" value="Submit">
+                                                                    </div>
+                                                                </form>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                {% endfor %}
+
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- /.row (main row) -->
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
+
+{% endblock content %}
+
+
+{% block scripts %}
+    <script>
+    $(document).ready(function(){
+        $("#attendanceList").DataTable();
+    })
+    </script>
+
+{% endblock scripts %}
